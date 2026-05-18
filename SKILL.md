@@ -24,6 +24,17 @@ If the user gives you nothing specific, ask: "Which project or projects? Or shou
 
 **If the user pastes raw user conversations:** treat as primary signal — outranks everything else. See `references/external-signals.md` → "User signal injection."
 
+### Confirmation gate — mandatory before any analysis
+
+Before collecting any signal, state what you're about to analyze and ask the user to confirm. Do not skip this even if the target seems obvious.
+
+Format:
+> **Analyzing:** `<what you understood — repo name, skill path, or description>`
+> **Mode:** Standard / Skill-as-project / Portfolio
+> Correct? I'll start once you confirm.
+
+Wait for confirmation. If the user corrects you, update your understanding and confirm again before proceeding.
+
 ---
 
 ## Phase 1 — Signal collection
