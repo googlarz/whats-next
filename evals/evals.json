@@ -18,6 +18,18 @@
       "prompt": "I have a CLI tool called vibe-safe that guards non-technical contributors from shipping broken AI-assisted code in shared repos. It checks for unsafe patterns before allowing commits. What should I build next for it?",
       "expected_output": "5 personas derived from description alone (no GitHub pull), with concrete and specific next-build recommendations despite limited signal",
       "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "whats next for this skill? (pointing at ~/.claude/skills/whats-next/)",
+      "expected_output": "Output must begin with '> Mode: Skill-as-project (skill-mode.md loaded)' before any persona cards appear. No gh CLI commands run on the local path. Personas grounded in skill signals (SKILL.md content, evals, ecosystem search) rather than GitHub issues or stars. At least one persona references the evals.json test cases as evidence.",
+      "files": ["SKILL.md", "references/skill-mode.md", "evals/evals.json"]
+    },
+    {
+      "id": 5,
+      "prompt": "analyze my vibe-safe skill",
+      "expected_output": "Detects 'vibe-safe' as a Claude Code skill by name match against available skills list. Outputs '> Mode: Skill-as-project (skill-mode.md loaded)' as first line of analysis without running any gh commands first. Reads ~/.claude/skills/vibe-safe/SKILL.md as primary signal source. Does not produce personas based on GitHub issues or stars.",
+      "files": []
     }
   ]
 }

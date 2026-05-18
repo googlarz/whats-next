@@ -87,6 +87,17 @@ whats next for my whats-next skill
 
 It also handles Claude Code skills as inputs — no GitHub repo needed.
 
+## Use without Claude Code
+
+If you use Claude.ai (browser) rather than Claude Code, paste the skill's core instructions directly into a [Claude Project](https://claude.ai/projects):
+
+1. Create a new Project at [claude.ai](https://claude.ai).
+2. Open Project Settings → System Prompt.
+3. Paste the contents of [`SKILL.md`](./SKILL.md) into the system prompt.
+4. In any conversation in that Project, type your request: `what should I build next for [your project]?`
+
+The core persona analysis, five lenses, and three-layer output work without Claude Code. What you lose without Claude Code: snapshot memory across sessions (no run-to-run diff), live GitHub data collection, and skill-mode detection for analyzing other Claude Code skills as input.
+
 ## How it works
 
 **Phase 1 — Signal collection**

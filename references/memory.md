@@ -47,7 +47,7 @@ The "still unaddressed" section is the most valuable part — it shows whether r
 
 The snapshot file should be the full analysis output — no trimming. Future runs load the full content for diffing.
 
-Add a metadata header:
+Add a metadata header using structured status tracking:
 ```markdown
 ---
 project: <repo-slug>
@@ -55,12 +55,22 @@ date: <YYYY-MM-DD>
 signal_quality: High/Medium/Low
 top_recommendation: <Layer 2 item 1>
 personas: [list of persona names]
-layer1_items: [short label for each Layer 1 fix, used for "still unaddressed" diff]
-layer2_items: [short label for each Layer 2 feature, used for "still unaddressed" diff]
+layer1_items:
+  - item: "short label for each Layer 1 fix"
+    status: open          # open / addressed / deferred
+    addressed_date: null  # fill with YYYY-MM-DD when addressed
+layer2_items:
+  - item: "short label for each Layer 2 feature"
+    status: open
+    addressed_date: null
 ---
 
 [full analysis output]
 ```
+
+**On each run:** When producing the diff section, compare the new layer items against the previous snapshot's metadata. For any item where `status: addressed`, note it as closed with the `addressed_date`. For any item `status: open` appearing in the prior snapshot, include it in "Still unaddressed."
+
+**Updating status:** When an item is completed between runs, update the previous snapshot's metadata before saving the new one — this is what makes the "Still unaddressed" list accurate rather than cumulative noise.
 
 ## Retention
 

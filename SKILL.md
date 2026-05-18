@@ -67,7 +67,30 @@ CHANGELOG bugs are especially valuable — a locale bug means real users in that
 
 **Source D — Memory:** Check `~/.claude/skills/whats-next-workspace/snapshots/` for a previous run. If found, **read the full snapshot file** — it is the baseline for the diff. Note the date in the signal header: "previous run from DATE (N days ago)". See `references/memory.md` for diff format.
 
-**Low-signal mode:** Mark gaps as near-certain vs. hypothesis. Ask the user for support emails or feedback if signal quality is Low.
+**Low-signal mode:** When signal quality is Low, do not just label and proceed. Execute the Low Signal Protocol:
+
+1. **Label the quality** — `Signal quality: Low` in the signal header.
+2. **Mark personas** — tag all inferred personas as `[Hypothesis]`.
+3. **Generate a validation block** — append this section at the END of the output:
+
+```
+## Low Signal — Gather Before Re-Running
+
+Signal quality is Low. The analysis above is hypothesis-based. To get higher-signal output, collect the following before re-running:
+
+**3 validation questions to ask your users / community:**
+1. [Domain-specific — e.g. for dev tools: "What made you try this instead of [most obvious alternative]?"]
+2. [Gap-targeting — "What's the first thing you'd remove or change if you had 30 minutes?"]
+3. [Adoption — "What almost stopped you from trying this?"]
+
+**Signals to gather:**
+- [ ] Any GitHub issues (even 1 is more than none)
+- [ ] Any HN / Reddit / Discord mentions of the project name or category
+- [ ] Any support emails or DMs from users
+- [ ] A published GitHub repo (if local-only today)
+```
+
+Tailor the 3 questions to the project domain. Don't generate generic questions.
 
 ---
 
