@@ -28,14 +28,27 @@ If the user gives you nothing specific, ask: "Which project or projects? Or shou
 
 ## Phase 1 — Signal collection
 
-**First: detect project type.** If the input is a Claude Code skill (path with `SKILL.md`, skill name, described as "a skill I built") — **stop and read `references/skill-mode.md` in full before doing anything else.** Do not run `gh` commands. Do not collect signals. Do not form personas. Read the reference first, then follow its signal collection path entirely.
+**First: detect project type. This is a mandatory gate — run it before any other command.**
 
-Once skill-mode is confirmed, output this line before the analysis header:
+**Step 1a — Filesystem check (local paths only):**
+```bash
+ls <given-path>/SKILL.md 2>/dev/null
+```
+If the file exists → this is a skill. Stop. Do not continue to Step 1b or signal collection.
+
+**Step 1b — Name/description check:**
+If the input mentions "a skill I built", "a Claude Code skill", a skill name matching the available skills list, or a path that describes a skill — this is a skill. Stop.
+
+**If either check triggers:**
+Read `references/skill-mode.md` in full. Do not run `gh` commands. Do not collect signals. Do not form personas. Follow skill-mode.md's signal collection path entirely.
+
+**Required output gate — must appear before Phase 2 begins:**
 ```
 > Mode: Skill-as-project (skill-mode.md loaded)
 ```
+If this line is absent from your output, you have not followed the detection path. Do not proceed to persona identification without it.
 
-If you are not certain whether the input is a skill or a repo, check for `SKILL.md` at the given path before deciding. When in doubt, check first.
+If neither check triggers, proceed with standard signal collection:
 
 For everything else, collect from four sources in parallel:
 

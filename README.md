@@ -6,31 +6,63 @@ Tell it a GitHub repo, a project description, or paste your support emails — i
 
 ## What it produces
 
+Five personas, three layers, one diff.
+
 ```
+# whats-next: finance-assistant
+Signal: 17★ repo, 1 closed issue, Reddit (vibe-coder building own tool from scratch),
+        HN (Era Context competitor launched), previous run 4 days ago
+
 ## The 5 Personas
-[5 users spanning technical → non-technical, each with evidence, context, gap, demand]
+
+### The FIRE Obsessive — Has a spreadsheet, wants Monte Carlo to be a living number
+Evidence: Monte Carlo + FIRE mode built early — suggests this user drove initial features
+Gap: portfolio values require manual entry; FIRE confidence goes stale between sessions
+Demand: daily price sync for tickers already stored (Yahoo Finance, no auth needed)
+
+### The Vibe-Coder — Spent 20 hours building own finance tool from scratch
+Evidence: Reddit r/ClaudeAI post — user doesn't know finance-assistant exists, or
+          hit the git clone + pip install + settings.json wall and quit
+Gap: install journey is a developer workflow; this persona hits a wall at step 1
+Demand: Claude Projects template — paste one file, start chatting in 2 minutes
+
+[3 more personas...]
 
 ## Layer 1 — Close the Gaps
-[Friction points costing you users today, with effort estimates]
+### 1. Hardcoded version string ★★★★★  [Effort: small]
+skill.py line 132 prints "3.1.2" regardless of __version__ — embarrassing on --doctor
 
 ## Layer 2 — Build Next
-[Ranked by persona overlap, with gap→feature traces]
+### 1. Live portfolio price sync ★★★★★  [Effort: medium]
+Source: FIRE Obsessive gap + Depth lens (what keeps satisfied users going deeper?)
+Yahoo Finance API, no auth, current_value = units × price, 6h TTL, skips cash/real_estate
 
 ## Layer 3 — Elevation Moves
-[1-3 bets that change what the project is, with falsifiable conditions]
+### The always-on financial layer
+What it changes: from "a skill you invoke" to "financial context in every Claude conversation"
+Competitor context: Era Context (MCP competitor) can't copy privacy-first ambient awareness
+The bet: works only if hook latency < ~100ms and false-positive injection rate < 10%
 
-## Don't Build Yet
-[Tempting moves with specific backfire mechanisms]
-
-## What We Set Aside
-[Gaps that didn't make the layers, and why]
+## What changed since 2026-05-13
+Still unaddressed: live portfolio prices (Layer 2 #1 from last run — still not built)
+New gap: Claude Projects template surfaced after vibe-coder Reddit post found
+Addressed: hardcoded version string — fixed in v3.2.0
 ```
 
 ## Install
 
 ```bash
-# Add to your Claude Code skills
 git clone https://github.com/googlarz/whats-next ~/.claude/skills/whats-next
+```
+
+Then add to `~/.claude/settings.json`:
+
+```json
+{
+  "skills": [
+    { "name": "whats-next", "path": "~/.claude/skills/whats-next" }
+  ]
+}
 ```
 
 ## Usage
@@ -81,8 +113,8 @@ Layers 1 and 2 ranked by genuine overlap — gap→feature traces required, not 
 **Phase 3.5 — Coverage check**
 Before outputting, verifies every persona gap and lens finding landed somewhere. Gaps that don't make the layers appear in "What we set aside" with a reason — so nothing silently disappears.
 
-**Phase 4 — Snapshot + action offer**
-Saves a snapshot for time-series comparison. Offers to action the top recommendation: write a spec, find the relevant code, draft a user validation question, or start a competitor deep-dive.
+**Phase 4 — Snapshot + diff + action offer**
+Saves a snapshot to `~/.claude/skills/whats-next-workspace/snapshots/`. On subsequent runs, diffs against the previous snapshot: which gaps are new, which were addressed, and — most usefully — which are *still unaddressed* after multiple runs. The "Still unaddressed" list is the highest-signal output for repeat users. Offers to action the top recommendation: write a spec, find the relevant code, draft a user validation question, or start a competitor deep-dive.
 
 ## References
 
