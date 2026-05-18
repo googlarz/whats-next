@@ -1,0 +1,23 @@
+{
+  "skill_name": "whats-next",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use whats-next on my finance-assistant repo (googlarz/finance-assistant on GitHub)",
+      "expected_output": "5 distinct persona cards with evidence, pain points, and concrete next-feature demands, plus a ranked Build Next list and a Don't Build Yet section",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Analyze my MCP server portfolio together — proton-mail-bridge-client, signal-mcp, and suunto-mcp (all under googlarz on GitHub). What should I build next across that stack?",
+      "expected_output": "Cross-project portfolio analysis with personas who span multiple tools, portfolio gaps identified, and sequenced recommendations",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I have a CLI tool called vibe-safe that guards non-technical contributors from shipping broken AI-assisted code in shared repos. It checks for unsafe patterns before allowing commits. What should I build next for it?",
+      "expected_output": "5 personas derived from description alone (no GitHub pull), with concrete and specific next-build recommendations despite limited signal",
+      "files": []
+    }
+  ]
+}
