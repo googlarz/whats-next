@@ -28,7 +28,14 @@ If the user gives you nothing specific, ask: "Which project or projects? Or shou
 
 ## Phase 1 — Signal collection
 
-**First: detect project type.** If the input is a Claude Code skill (path with `SKILL.md`, skill name, described as "a skill I built") — switch to skill-mode. `gh` commands will fail on skill paths and the wrong personas will emerge. See `references/skill-mode.md`.
+**First: detect project type.** If the input is a Claude Code skill (path with `SKILL.md`, skill name, described as "a skill I built") — **stop and read `references/skill-mode.md` in full before doing anything else.** Do not run `gh` commands. Do not collect signals. Do not form personas. Read the reference first, then follow its signal collection path entirely.
+
+Once skill-mode is confirmed, output this line before the analysis header:
+```
+> Mode: Skill-as-project (skill-mode.md loaded)
+```
+
+If you are not certain whether the input is a skill or a repo, check for `SKILL.md` at the given path before deciding. When in doubt, check first.
 
 For everything else, collect from four sources in parallel:
 
@@ -45,7 +52,7 @@ CHANGELOG bugs are especially valuable — a locale bug means real users in that
 
 **Source C — Competitor landscape:** What alternatives exist and how users compare them. Required before writing elevation moves. See `references/competitors.md`.
 
-**Source D — Memory:** Check `~/.claude/skills/whats-next-workspace/snapshots/` for a previous run. Diff = signal. See `references/memory.md`.
+**Source D — Memory:** Check `~/.claude/skills/whats-next-workspace/snapshots/` for a previous run. If found, **read the full snapshot file** — it is the baseline for the diff. Note the date in the signal header: "previous run from DATE (N days ago)". See `references/memory.md` for diff format.
 
 **Low-signal mode:** Mark gaps as near-certain vs. hypothesis. Ask the user for support emails or feedback if signal quality is Low.
 
@@ -158,7 +165,9 @@ If a gap or lens finding is excluded, note why in a brief `## What we set aside`
 
 ---
 
-## Phase 4 — Save snapshot + offer to action
+## Phase 4 — Diff + save snapshot + offer to action
+
+**If a previous snapshot was loaded in Phase 1 Source D**, produce a `## What changed since [DATE]` section *before* saving (see `references/memory.md` for the exact format). This is the most valuable part of a repeat run — skip it only if there is genuinely no previous snapshot.
 
 Save to `~/.claude/skills/whats-next-workspace/snapshots/<slug>-<YYYY-MM-DD>.md`. See `references/memory.md`.
 
@@ -171,6 +180,8 @@ Offer to action the top pick immediately — don't wait to be asked:
 
 ```
 # whats-next: [Project Name]
+> Mode: Skill-as-project (skill-mode.md loaded)   ← include only when in skill-mode; omit for standard repos
+
 **Signal sources:** [repo data, N HN mentions, competitor scan, previous run DATE / first run]
 **Signal quality:** High / Medium / Low
 **Mode:** Standard / Skill-as-project
@@ -205,6 +216,15 @@ Offer to action the top pick immediately — don't wait to be asked:
 
 ## What we set aside
 - [Gap or lens finding] — [why it didn't make the layers]
+
+## What changed since [DATE]
+**Personas:** [new / dropped / confidence changes]
+**Top gaps:** [appeared / disappeared / changed priority]
+**Recommendations:** [moved up/down in layers, newly added]
+**Signal changes:** [new external mentions, issues, competitor moves]
+**Still unaddressed from last run:** [Layer 1/2 items from previous run that weren't built]
+
+*(Omit this section on first run. Include on every subsequent run.)*
 
 ---
 *Snapshot saved. Run again to see what changed.*

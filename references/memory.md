@@ -55,6 +55,8 @@ date: <YYYY-MM-DD>
 signal_quality: High/Medium/Low
 top_recommendation: <Layer 2 item 1>
 personas: [list of persona names]
+layer1_items: [short label for each Layer 1 fix, used for "still unaddressed" diff]
+layer2_items: [short label for each Layer 2 feature, used for "still unaddressed" diff]
 ---
 
 [full analysis output]
