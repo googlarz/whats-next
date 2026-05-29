@@ -270,12 +270,12 @@ Offer to action the top pick immediately — don't wait to be asked:
 
 After all layers, always close with this summary table. Every item from Layer 1 and Layer 2 gets a row. Layer 3 moves get rows marked with `🚀`. "Don't build yet" items are excluded.
 
-| # | What | Layer | Impact | Effort | Who it helps |
-|---|------|-------|--------|--------|--------------|
-| 1 | [short name] | L1 / L2 / L3 | High / Med / Low | S / M / L | [persona names] |
+| # | What | Layer | Impact | Effort | Description |
+|---|------|-------|--------|--------|-------------|
+| 1 | [short name] | L1 / L2 / L3 | High / Med / Low | S / M / L | [5–8 word description] |
 | … | | | | | |
 
-Impact = combined signal strength (persona overlap + lens weight). Effort = S (days) / M (weeks) / L (months). Sort by Impact desc, then Effort asc within the same impact band. This table is the decision-making surface — keep descriptions to 5–8 words.
+Impact = combined signal strength (persona overlap + lens weight). Effort = S (days) / M (weeks) / L (months). Sort by Impact desc, then Effort asc within the same impact band. Description is the one-line why — what problem it solves, not what it is.
 
 ## What changed since [DATE]
 **Personas:** [new / dropped / confidence changes]
