@@ -423,12 +423,12 @@ Offer to action the top pick immediately — don't wait to be asked:
 ## At a glance
 *The scannable index — same order as the recommendations above. Detail is in the sections above.*
 
-| # | What | Type | Impact | Effort | Description |
-|---|------|------|--------|--------|-------------|
-| 1 | [short name] | Gap / Build / Elev | ★★★★★ | S / M / L | [5–8 word why — the problem it solves] |
-| 2 | … | | ★★★★☆ | | |
+| # | What | Type | Impact | Effort | Sequencing | Description |
+|---|------|------|--------|--------|------------|-------------|
+| 1 | [short name] | Gap / Build / Elev | ★★★★★ | S / M / L | none | [5–8 word why — the problem it solves] |
+| 2 | … | | ★★★★☆ | | after #1 | |
 
-Numbered best-first, identical order to the recommendations. **Impact column carries the same ★ rating as the recommendation** — not a collapsed High/Med/Low, which buckets 4★ and 5★ together and makes the index stop sorting. Effort = S (days) / M (weeks) / L (months).
+Numbered best-first, identical order to the recommendations. **Impact carries the same ★ rating as the recommendation** — not collapsed High/Med/Low. Sequencing shows dependencies so the table works as a standalone planning view — you can see what to ship first and what's blocked without re-reading the full analysis. Effort = S (days) / M (weeks) / L (months).
 
 ---
 *Snapshot saved. Run again to see what changed.*
