@@ -128,7 +128,11 @@ Archetypes (adapt — don't force):
 4. Casual / non-technical user
 5. Team deployer — installs it for others
 
-Ask: **who is the least technical person who could plausibly benefit?** That persona belongs in the set. If that persona turns out to be "dead" — their only gap is unsolvable within the project (e.g. "can't install it without a developer" when the project can't change that) — don't silently backfill the slot with another technical persona and quietly raise the floor. Either reach down to the lowest persona who *does* have a solvable gap, or state plainly that the category has no viable non-technical user. A silently all-technical persona set on a tool that could serve normal people is a miss.
+**The non-technical floor is mandatory.** One of the 5 personas must be the least technical person who can plausibly benefit. This is the most commonly missed persona — and the one whose gaps most often surface recommendations no other persona would generate (plain-language onboarding, trust signals, UX friction that experts stopped noticing).
+
+To find them: ask "who would use this if a technical friend set it up for them?" or "what's the least technical person mentioned in any competitor review?" For a finance tool: a spouse tracking the family budget in a spreadsheet. For a CLI tool: a researcher who follows instructions but doesn't write code. For a messaging app: a family member who just wants to stop missing important group messages.
+
+If the genuinely non-technical persona's *only* gap is "can't install it" and that's truly unfixable — state it plainly ("This category has no viable non-technical user without a technical intermediary") and explain why. Do NOT silently replace them with a second technical persona. If you end with 5 technical personas and no explanation, you have failed this check. The non-technical user almost always surfaces at least one gap the technical users have stopped noticing.
 
 **Avoid overlap.** Each persona must drive at least one different recommendation. **Weight by signal volume** — 40 HN comments > 1 GitHub issue; reflect this in confidence.
 
@@ -150,6 +154,14 @@ Gap ≠ demand. Gap is what's wrong now. Demand is what they want built. They're
 **Evidence requirement:** If a persona has no signal support (no issue, no commit message, no HN comment, no release title pointing to this user type), mark it explicitly as `[Hypothesis]` and lower its weight in the ranking.
 
 **Pre-launch persona construction:** For WIP / unreleased apps with no user data, the non-technical and evaluator personas cannot be grounded in usage evidence. Instead, ground them in **launch audience characteristics**: What audience is the Product Hunt / launch channel submission targeting? Who shares this type of app on Twitter/Reddit? What are the top App Store reviews for the nearest comparable? Use these as evidence sources when in-app signal is unavailable.
+
+### Most dangerous assumption (required, 1–3 sentences)
+
+Before the Missing voices section, name the single biggest assumption in this entire analysis that, if wrong, would invalidate the top recommendation. This is the meta-level perspective the rest of the output can't provide — it's an honest flag to the builder that the analysis rests on a foundation they should verify.
+
+Example: "This entire analysis assumes the core catch-up summary quality is good enough that first users feel it worked. If the summaries are consistently wrong or miss key decisions, the #1 recommendation (driving traffic via a demo) actively hurts — it creates bad first impressions at scale. Verify with 3–5 test users before posting."
+
+One paragraph, not a list. It should be the thing that would make the builder nod and say "yes, that's actually what I'm most uncertain about."
 
 ### Missing voices (required, 3–5 lines)
 
@@ -294,6 +306,8 @@ Before outputting, verify every box is checked. If any fails, fix it before proc
 - [ ] **Competitor claims are tagged** — any named competitor, named product feature, or "no competitor does X" assertion that you did not directly verify gets `[unverified]` inline. This applies everywhere: Elevation competitor-context blocks, mechanism descriptions ("competitor Y doesn't have Z"), and comparison tables. The builder needs to know what's checked vs. inferred before publishing any comparison publicly.
 - [ ] **"Don't build yet" has ≥1 item** with a backfire mechanism (not a priority judgment).
 - [ ] **Brand before behavior:** if an Elevation makes a positioning claim ("privacy-native"), a Gap fixes any current behavior that contradicts it — else the claim is a credibility trap.
+- [ ] **Non-technical persona present** — one of the 5 personas is the least technical person who can plausibly benefit. If all 5 are technical users (developers, power users, evaluators-who-write-code), this check fails. The non-technical persona must have a solvable gap that drives at least one recommendation.
+- [ ] **Most dangerous assumption stated** — the single biggest assumption the analysis rests on, named honestly before Missing voices.
 - [ ] **Goal comparison section present** — 2 alternative goals named, each with what moves to #1 and what drops off. The recommendations that are robust across all 3 goals are called out.
 - [ ] **Missing voices present** — at least 2 named user types with zero signal, each with one sentence on what they'd surface that the current personas don't.
 - [ ] **Structure:** goal in the header matches the gate; recommendations lead; personas + missing voices + goal comparison before the diff; At-a-glance table is last with nothing after it but the footer.
@@ -368,6 +382,8 @@ Offer to action the top pick immediately — don't wait to be asked:
 ## Personas behind these
 *The analytical basis for the ranking above — who these recommendations serve.*
 [5 persona cards: Evidence / Their context / Gap they hit / What they'd demand next]
+
+**Most dangerous assumption:** [1–3 sentences naming the single biggest assumption the whole analysis rests on — what, if wrong, would invalidate the #1 recommendation.]
 
 **Missing voices:** [3–5 lines naming user types with zero signal whose perspective would change the analysis. One sentence each: who they are and what they'd surface that the current 5 personas don't.]
 
