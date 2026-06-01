@@ -241,6 +241,7 @@ The analysis travels **with** the recommendation — that is what "best recommen
 - **Source trace** — which persona gap(s) and/or lens finding(s) drive it. Only count a persona if their specific gap implies demand for this specific item. A rating without a basis is unverifiable.
 - **Mechanism** — concretely what to build or change.
 - **What would change my mind** — the one assumption that, if false, drops this item down or off the list. One line. This lets the builder, who knows things you don't, override intelligently.
+- **Success signal** — what observable thing in 2–4 weeks tells you this was the right call? One line. Not a metric to optimize — a concrete thing the builder can actually observe without instrumentation if needed. Examples: "3 unprompted mentions of the demo in HN comments," "credential complaints drop out of TestFlight feedback," "widget screenshot appears in a tweet." This turns the recommendation from advice into a testable hypothesis.
 - **Sequencing** — required field, **≤6 words**: "after #2" or "none." Hard cap. If you're tempted to explain *why* it depends on #2, that reasoning belongs in "Why it ranks here," not here. And it must be consistent: if #5 says "after #2," then #2's sequencing cannot be "none" — the dependency is mutual information.
 
 ### Elevation discipline (applies to Elevation-tagged items)
@@ -282,7 +283,7 @@ Before outputting, verify every box is checked. If any fails, fix it before proc
 
 - [ ] **#1 is genuinely the best move toward the goal** — not the most exciting or biggest. Does a cheaper item lower down serve the goal better? Then it's #1. The single most important check.
 - [ ] **Ranked by goal-impact ÷ effort** — types interleaved, not grouped. The At-a-glance table carries the same ★ as each rec, not a collapsed High/Med/Low.
-- [ ] **Every rec carries all six fields — Elevations included** — type · impact · effort header, plus Source, Mechanism, "what would change my mind," and Sequencing. Elevations are *not* exempt from Source / Mechanism / Sequencing (the most common silent omission). Elevations add Competitor context + a falsifiable, measurable bet.
+- [ ] **Every rec carries all seven fields — Elevations included** — type · impact · effort header, plus Source, Mechanism, "what would change my mind," "Success signal," and Sequencing. Elevations are *not* exempt from any of these (the most common silent omission). Elevations also add Competitor context + a falsifiable, measurable bet.
 - [ ] **Nothing accounted for by silence** — scan every persona card's "Gap they hit" field; each must appear in at least one rec's Source line OR in "What we set aside." A gap visible in a persona card that resolves nowhere is the worst kind of omission. Same for all 5 lenses (per lens-coverage line) and every category-adjacent domain (present as rec or cleared set-aside line, never silent).
 - [ ] **No phantom citations** — every persona named in a Source line has a card in "Personas behind these"; every lens named actually appears.
 - [ ] **No self-narration** — the output never references its own machinery. Banned: naming a reference file/line ("per skill-mode.md line 110"), "per the coverage check," "gate skipped," a lens "firing"/"accounted for"/"has no purchase"/"noted rather than forced," naming the Trust-vs-Security split or domain sweep as a mechanic, calling a persona "dead," and naming the output's own sections as scaffolding ("the validation block," "the At-a-glance table tells you…"). State the *finding*, never that a rule or section produced it. Persona selection is invisible — never "this replaces X." A reader shouldn't be able to tell the skill has phases.
@@ -330,6 +331,7 @@ Offer to action the top pick immediately — don't wait to be asked:
 **Source:** [Persona X gap] + [lens/domain finding]
 **Mechanism:** [concretely what to build/change]
 **What would change my mind:** [the one assumption that, if false, drops it]
+**Success signal:** [what you'd observe in 2–4 weeks that confirms this was right — concrete, not a metric]
 **Sequencing:** [≤6 words — "after #3" or "none". Never restate the rationale.]
 
 ### 2. [Name] · [Build] · Impact ★★★★☆ · Effort S
@@ -337,6 +339,7 @@ Offer to action the top pick immediately — don't wait to be asked:
 **Source:** ...
 **Mechanism:** ...
 **What would change my mind:** ...
+**Success signal:** ...
 **Sequencing:** none
 
 ### 3. [Name] · [Elevation] · Impact ★★★☆☆ · Effort L
@@ -345,6 +348,7 @@ Offer to action the top pick immediately — don't wait to be asked:
 **Mechanism:** [concretely what to build — REQUIRED, elevations are not exempt]
 **Competitor context:** [what rivals do/don't do that makes this structurally yours]
 **What would change my mind:** [the falsifiable bet — "works only if X." Add "Requires: [what to instrument]" if unmeasurable today.]
+**Success signal:** [the early observable indicator — e.g. "privacy community shares the architecture post within 48 hours of publishing"]
 **Sequencing:** [terse]
 
 ### … [continue — comprehensive, every recommendation, ranked best-first. Every rec — Gap, Build, AND Elevation — carries all six fields: Source, Mechanism, Sequencing are never dropped.]
