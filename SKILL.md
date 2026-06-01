@@ -204,6 +204,8 @@ The analysis travels **with** the recommendation — that is what "best recommen
 ### Elevation discipline (applies to Elevation-tagged items)
 Include **at least 2** Elevation moves from different angles: one that changes **who** the project serves, one that changes **how** value is delivered (pull → push, sync → async, individual → ambient).
 
+**Elevation moves are ranked into the single best-first list like everything else** — they carry the `Elevation` tag inline and take their position by impact-toward-goal ÷ effort. Do **not** append them as a separate "Elevation moves" section at the bottom: that recreates the old Layer 3, breaks the "one ranked list" the user asked for, and pushes content past the table that must come last. If a big elevation bet ranks low because it's high-effort and long-horizon, that's honest — it's a direction, not your next action — and the reader still sees it in the list and the table.
+
 - **Competitor context required:** name what competitors do or don't do. "Build X in a way structurally impossible for competitor Y to copy" is elevation. "Build X, which Y already does" is not.
 - **Falsifiable bet:** the "what would change my mind" line for an Elevation item must be a single make-or-break condition, wrong-able: "Works only if X," not "works if it's good enough."
 - **Measurability check:** if the project can't currently measure that bet, append "Requires: [what to instrument]." A bet that can't be measured is unfalsifiable in practice, however specific it sounds.
@@ -225,7 +227,8 @@ Before outputting, verify every box is checked. If any fails, fix it before proc
 - [ ] **Every lens finding** not already covered by a persona gap appears somewhere, OR is explicitly set aside with a reason
 - [ ] **At least one Gap-type recommendation exists** (no project has zero friction points today)
 - [ ] **At least 2 Build-type recommendations** with verified overlap traces
-- [ ] **At least one Elevation move** that changes who the project primarily serves, not just what it does
+- [ ] **At least one Elevation move** that changes who the project primarily serves, not just what it does — **ranked inline in the list, NOT in a separate trailing section**
+- [ ] **Nothing follows the "At a glance" table** except the snapshot footer — no trailing "Elevation moves" block
 - [ ] **"Don't build yet" has ≥1 item** with a backfire mechanism (no project has zero tempting-but-wrong moves)
 - [ ] **Effort signal (S/M/L) on every recommendation**, not just the top one
 - [ ] **Sequencing noted** where one item must ship before another is reachable. In particular: if an Elevation move makes a brand/positioning claim (e.g. "privacy-native"), verify that a Gap fix addresses any behavior that contradicts that claim — brand before behavior is a credibility trap.
@@ -318,6 +321,8 @@ Numbered best-first, identical order to the recommendations. Impact = impact tow
 ---
 *Snapshot saved. Run again to see what changed.*
 ```
+
+**Nothing appears after the "At a glance" table except the snapshot footer.** If you find yourself writing an "Elevation moves" block below the table, stop — those items belong *in* the ranked recommendations above, interleaved by rank. The table is the last content section, every run.
 
 ---
 
