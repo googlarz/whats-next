@@ -33,15 +33,14 @@ When a previous snapshot exists, after completing the new analysis, produce a di
 ```
 ## What changed since [DATE]
 
-**Personas:** [new personas added / old ones dropped / confidence changes]
-**Top gaps:** [gaps that appeared, disappeared, or changed priority]
-**Recommendations:** [what moved up/down in Layer 1-2, what's new in Layer 3]
+**Top recommendations:** [what moved up/down in the ranking, what's newly #1, what dropped off]
+**Still unaddressed from last run:** [recommendations from the previous run that weren't built]
 **Signal changes:** [new external mentions found, issues filed, competitor moves]
-
-**Still unaddressed from last run:** [Layer 1/2 items from previous run that weren't built]
+**Personas:** [new personas added / old ones dropped / confidence changes]
+**Goal:** [note if the builder's optimization goal changed since last run — this re-ranks everything]
 ```
 
-The "still unaddressed" section is the most valuable part — it shows whether recommendations are being acted on or accumulating. If the same gap appears 3 runs in a row, it's either not actually a priority or it's harder to build than it looked.
+The "still unaddressed" section is the most valuable part — it shows whether recommendations are being acted on or accumulating. If the same recommendation appears 3 runs in a row unbuilt, it's either not actually a priority or it's harder to build than it looked — say so, and consider dropping its rank.
 
 ## Snapshot format
 
@@ -52,23 +51,22 @@ Add a metadata header using structured status tracking:
 ---
 project: <repo-slug>
 date: <YYYY-MM-DD>
+goal: <the confirmed optimization goal — e.g. launch conversion, retention>
 signal_quality: High/Medium/Low
-top_recommendation: <Layer 2 item 1>
+top_recommendation: <the #1 ranked item>
 personas: [list of persona names]
-layer1_items:
-  - item: "short label for each Layer 1 fix"
-    status: open          # open / addressed / deferred
-    addressed_date: null  # fill with YYYY-MM-DD when addressed
-layer2_items:
-  - item: "short label for each Layer 2 feature"
-    status: open
-    addressed_date: null
+recommendations:
+  - item: "short label"
+    type: Gap            # Gap / Build / Elevation
+    rank: 1              # position in the best-first list
+    status: open         # open / addressed / deferred
+    addressed_date: null # fill with YYYY-MM-DD when addressed
 ---
 
 [full analysis output]
 ```
 
-**On each run:** When producing the diff section, compare the new layer items against the previous snapshot's metadata. For any item where `status: addressed`, note it as closed with the `addressed_date`. For any item `status: open` appearing in the prior snapshot, include it in "Still unaddressed."
+**On each run:** When producing the diff section, compare the new ranked list against the previous snapshot's metadata. For any item where `status: addressed`, note it as closed with the `addressed_date`. For any item `status: open` appearing in the prior snapshot, include it in "Still unaddressed." Note rank movement — an item that was #4 and is now #1 (or vice versa) is a signal worth calling out, especially if the goal changed.
 
 **Updating status:** When an item is completed between runs, update the previous snapshot's metadata before saving the new one — this is what makes the "Still unaddressed" list accurate rather than cumulative noise.
 

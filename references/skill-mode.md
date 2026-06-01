@@ -122,10 +122,10 @@ In the persona evidence field, cite skill-specific signals:
 - "Evidence: skill has no external repo, inferred as single-author use"
 - "Evidence: 3 HN comments mention this skill category positively"
 
-In Layer 3 elevation moves, always include publication as a candidate:
-- If unpublished: "Publish to GitHub + awesome-claude-skills" is almost always an elevation move — it changes the project from personal tool to community resource
-- If published: the elevation move should be about distribution, integration, or category expansion
+In Elevation moves, always include publication as a candidate:
+- If unpublished: "Publish to GitHub + awesome-claude-skills" is almost always an Elevation move — it changes the project from personal tool to community resource
+- If published: the Elevation move should be about distribution, integration, or category expansion
 
-**Layer 3 test for skills:** "Publish" is the baseline elevation. For a second or third elevation move, ask: does this change what the skill *is*, not just what it *does*? Examples of genuine skill-level elevation: packaging as an MCP server (changes interface), defining an open data format (becomes a protocol), enabling proactive triggers (changes from reactive to ambient). Extending existing capabilities (even significantly) is Layer 2, not Layer 3.
+**Elevation test for skills:** "Publish" is the baseline elevation. For a second or third Elevation move, ask: does this change what the skill *is*, not just what it *does*? Examples of genuine skill-level elevation: packaging as an MCP server (changes interface), defining an open data format (becomes a protocol), enabling proactive triggers (changes from reactive to ambient). Extending existing capabilities (even significantly) is a Build, not an Elevation.
 
 **Gap vs. demand in skill mode:** The gap is what breaks or frustrates the persona *today* with the current skill. The demand is what they would ask to be built. These should differ in specificity level: gap = "skill tries gh commands on a local path and fails silently", demand = "skill-mode detection with confirmed Mode: Skill-as-project in header". If gap and demand are close paraphrases of each other, the gap isn't specific enough.

@@ -5,7 +5,9 @@ description: Analyze one or more projects by identifying the top 5 user personas
 
 # whats-next
 
-Strategic product direction through persona-based analysis. You identify who actually uses a project — spanning the full range from power users to casual non-technical users — give each persona a voice, surface the gaps they hit, run five product lenses to catch what persona analysis misses, then verify the recommendations are complete before outputting.
+Strategic product direction through persona-based analysis. You identify who actually uses a project — spanning the full range from power users to casual non-technical users — give each persona a voice, surface the gaps they hit, and run five product lenses to catch what persona analysis misses. You then produce **one comprehensive list of recommendations, ranked best-first against the builder's actual goal**, each carrying its own analysis. The persona/lens machinery is the engine; the ranked recommendation list is the output.
+
+Two things make this more than a generic "what should I build" answer: it ranks every recommendation by **impact toward a confirmed goal ÷ effort** (so the #1 pick is the best move *for this builder*, not the most exciting one), and it leads with the best recommendation and its reasoning rather than burying it under persona cards.
 
 After analysis, you offer to action the top pick.
 
@@ -26,14 +28,22 @@ If the user gives you nothing specific, ask: "Which project or projects? Or shou
 
 ### Confirmation gate — mandatory before any analysis
 
-Before collecting any signal, state what you're about to analyze and ask the user to confirm. Do not skip this even if the target seems obvious.
+Before collecting any signal, confirm two things: **what** you're analyzing and **what the user is optimizing for**. The goal is what makes "best recommendation" mean something — without it, "best" silently defaults to "most persona-overlap," which is a proxy, not necessarily best *for this builder*.
+
+Infer a provisional goal from the input and offer it for correction:
+- A pre-launch / WIP app → launch conversion
+- A library with issues piling up → reducing maintenance load
+- A growing tool with adoption signal → retention or revenue
+- A profile-wide scan → portfolio coherence
+- Don't know? Offer the two most likely and let the user pick.
 
 Format:
-> **Analyzing:** `<what you understood — repo name, skill path, or description>`
+> **Analyzing:** `<repo / skill path / description>`
+> **Optimizing for:** `<inferred goal>` — revenue / adoption / retention / launch conversion / cutting maintenance load / learning / portfolio coherence. Correct me if it's something else.
 > **Mode:** Standard / Skill-as-project / Portfolio
-> Correct? I'll start once you confirm.
+> I'll start once you confirm.
 
-Wait for confirmation. If the user corrects you, update your understanding and confirm again before proceeding.
+Wait for confirmation. If the user corrects the goal, **re-rank everything against the corrected goal** — it changes what counts as "best." The goal is not decoration; it is the ranking key in Phase 3.
 
 ---
 
@@ -120,7 +130,7 @@ Ask: **who is the least technical person who could plausibly benefit?** That per
 
 **Avoid overlap.** Each persona must drive at least one different recommendation. **Weight by signal volume** — 40 HN comments > 1 GitHub issue; reflect this in confidence.
 
-**Anti-overlap test:** Before finalizing, ask: "If I merged Persona A and Persona B into one card, would any layer item disappear?" If no — merge them and build a genuinely distinct persona instead. Two technical users with different feature requests are still the same persona if their underlying gaps are the same.
+**Anti-overlap test:** Before finalizing, ask: "If I merged Persona A and Persona B into one card, would any recommendation disappear?" If no — merge them and build a genuinely distinct persona instead. Two technical users with different feature requests are still the same persona if their underlying gaps are the same.
 
 **Specificity floor:** Each persona's "Their context" must include at least one concrete lifestyle detail (not just a job title). Bad: "a developer who wants AI in their workflow." Good: "a developer who has Claude open in a browser tab all day and copies message text into it 10+ times before noon."
 
@@ -135,7 +145,7 @@ For each persona:
 
 Gap ≠ demand. Gap is what's wrong now. Demand is what they want built. They're often at different levels of specificity.
 
-**Evidence requirement:** If a persona has no signal support (no issue, no commit message, no HN comment, no release title pointing to this user type), mark it explicitly as `[Hypothesis]` and lower its weight in layer prioritization.
+**Evidence requirement:** If a persona has no signal support (no issue, no commit message, no HN comment, no release title pointing to this user type), mark it explicitly as `[Hypothesis]` and lower its weight in the ranking.
 
 **Pre-launch persona construction:** For WIP / unreleased apps with no user data, the non-technical and evaluator personas cannot be grounded in usage evidence. Instead, ground them in **launch audience characteristics**: What audience is the Product Hunt / launch channel submission targeting? Who shares this type of app on Twitter/Reddit? What are the top App Store reviews for the nearest comparable? Use these as evidence sources when in-app signal is unavailable.
 
@@ -143,7 +153,7 @@ Gap ≠ demand. Gap is what's wrong now. Demand is what they want built. They're
 
 ## Phase 2.5 — Five product lenses (pre-synthesis)
 
-Before writing the layers, run these five questions. They surface recommendations that persona gaps miss — a happy power user has no gap, but there may still be a promise gap or adjacency move worth surfacing.
+Before writing the recommendations, run these five questions. They surface recommendations that persona gaps miss — a happy power user has no gap, but there may still be a promise gap or adjacency move worth surfacing.
 
 Work through each fully — do not skip a lens. Each must produce at least one finding, even if it's "lens confirms gap already captured by Persona X." If a lens produces nothing, state why explicitly (it becomes "What we set aside" material).
 
@@ -157,36 +167,46 @@ Work through each fully — do not skip a lens. Each must produce at least one f
 
 5. **Category leadership** — What's the single thing keeping this from being the obvious, default choice in its category? What does the category leader have that this doesn't?
 
-Lens findings feed into Layers 1, 2, and 3 alongside persona gaps. **All 5 lens labels must appear somewhere in the output** — either in a layer item or in "What we set aside." If a lens label is missing from the output, the coverage check fails.
+Lens findings feed into the ranked recommendations alongside persona gaps. **All 5 lens labels must appear somewhere in the output** — either in a recommendation or in "What we set aside." If a lens label is missing from the output, the coverage check fails.
 
-**This working section is internal — do not reproduce it in the output.** Only the findings appear, labeled in the layer items where they land.
+**This working section is internal — do not reproduce it in the output.** Only the findings appear, labeled in the recommendations where they land.
 
 ---
 
-## Phase 3 — Three-layer output
+## Phase 3 — Rank and synthesize
 
-Synthesize persona gaps + lens findings into three layers:
+Turn persona gaps + lens findings into **one comprehensive list of recommendations, ranked best-first**. The rank — not the layer — is the organizing principle of the output. The user wants the single best move at the top *with its reasoning attached*, then the next best, all the way down. Don't group by type and make the reader hunt; interleave and rank.
 
-### Layer 1 — Close the gaps
-Blockers and friction points **actively costing users today** — not underexposed features, not missing features. These are things a current user hits and loses trust or stops. Ask: "Would removing this make a user who already found the product stay?" If yes, it's Layer 1. If it requires a new user to show up first, it's Layer 2.
+Each recommendation carries a **type tag** so the reader knows what kind of move it is:
 
-### Layer 2 — Build next
-Ranked by genuine overlap across personas AND lenses. **Show your work:** trace each item to its source (persona name + gap, or lens name + finding). Only count a persona if their specific gap implies demand for this specific feature.
+- **Gap** — friction *actively costing users today*. A current user hits this and loses trust or stops. Test: "Would removing this make a user who already found the product stay?" If it needs a *new* user to show up first, it's a Build, not a Gap.
+- **Build** — a new capability. Driven by genuine overlap across personas AND lenses.
+- **Elevation** — a bet that changes what the project *is*, not just makes it better. Test: would you describe the project differently after this move?
 
-**Explain the ranking:** After each item's ★ rating, note in one phrase what drove it: "3 personas + 2 lenses" or "1 persona, but the only feature blocking Product Hunt launch." A rating without a basis is unverifiable.
+### The ranking key
+Rank across all three types **together**, by **impact toward the confirmed goal ÷ effort**. This is the heart of the upgrade:
 
-### Layer 3 — Elevation moves
-2–3 bets that change what the project *is*. Aim for moves from different angles:
-- One that changes **who** the project primarily serves
-- One that changes **how** value is delivered (pull → push, sync → async, individual → ambient)
+- A cheap Gap fix that directly serves the goal **outranks** an expensive Build, even though "gaps" sound less exciting than "features." Don't rank by type.
+- "Impact" means impact toward *this builder's goal* — not generic value. A feature 3 personas want but that doesn't move the stated goal ranks below a fix only 1 persona wants that unblocks the goal directly.
+- Within an impact tie, lower effort wins.
+- State the ranking logic once at the top of the list: "Ranked by impact toward [goal] ÷ effort."
 
-**Elevation test:** Would you describe the project differently after this move? If not, it's Layer 2.
+### Each recommendation carries its analysis inline
+The analysis travels **with** the recommendation — that is what "best recommendations with analysis first" means. Don't separate the list from the reasoning. For each:
 
-**Competitor context required:** Name what competitors do or don't do. "Build X in a way structurally impossible for competitor Y to copy" is an elevation move. "Build X, which competitor Y already does" is not.
+- **Header line:** `[Name] · [Gap/Build/Elevation] · Impact ★★★★★ · Effort S/M/L`
+- **Why it ranks here** — its impact toward the *goal* specifically. This is the sentence that justifies its position.
+- **Source trace** — which persona gap(s) and/or lens finding(s) drive it. Only count a persona if their specific gap implies demand for this specific item. A rating without a basis is unverifiable.
+- **Mechanism** — concretely what to build or change.
+- **What would change my mind** — the one assumption that, if false, drops this item down or off the list. One line. This lets the builder, who knows things you don't, override intelligently.
+- **Sequencing** — if it depends on another item shipping first, say so.
 
-**Falsifiable bet:** One make-or-break condition. Not a list — one thing. Should be wrong-able: "This works only if X" not "This works if it's good enough."
+### Elevation discipline (applies to Elevation-tagged items)
+Include **at least 2** Elevation moves from different angles: one that changes **who** the project serves, one that changes **how** value is delivered (pull → push, sync → async, individual → ambient).
 
-**Measurability check:** Before writing the bet, ask: does this project currently have the instrumentation to measure the condition? If not, append: "Requires: [what needs to be tracked before this bet can be evaluated]." A bet that can't be measured is unfalsifiable in practice, even if it sounds specific.
+- **Competitor context required:** name what competitors do or don't do. "Build X in a way structurally impossible for competitor Y to copy" is elevation. "Build X, which Y already does" is not.
+- **Falsifiable bet:** the "what would change my mind" line for an Elevation item must be a single make-or-break condition, wrong-able: "Works only if X," not "works if it's good enough."
+- **Measurability check:** if the project can't currently measure that bet, append "Requires: [what to instrument]." A bet that can't be measured is unfalsifiable in practice, however specific it sounds.
 
 ### Don't build yet
 Specific backfire mechanism per item — not prioritization. "Building Y would require solving Z first, and Z is a harder problem than Y appears" is a reason. "Not a priority" is not.
@@ -197,16 +217,19 @@ Specific backfire mechanism per item — not prioritization. "Building Y would r
 
 Before outputting, verify every box is checked. If any fails, fix it before proceeding:
 
-- [ ] **Every persona's gap** appears in at least one layer, OR is explicitly in "Don't build yet" with a reason
-- [ ] **All 5 lens labels appear** in the output — either in a layer item or in "What we set aside." Count them: Depth, Breadth, Promise gap, Adjacency, Category leadership. Missing label = fix before proceeding.
-- [ ] **Every lens finding** that isn't already covered by a persona gap appears somewhere, OR is explicitly set aside with a reason
-- [ ] **Layer 1 exists** — at least one fix (no project has zero friction points today)
-- [ ] **Layer 2 has ≥2 items** with verified overlap traces
-- [ ] **Layer 3 has at least one move** that changes who the project primarily serves, not just what it does
+- [ ] **The #1 recommendation is genuinely the best move toward the stated goal** — not the most exciting, not the biggest. Re-check: does a cheaper item further down actually serve the goal better? If so, it should be #1. This is the single most important check.
+- [ ] **Ranking is by goal-impact ÷ effort, not by type** — verify Gaps, Builds, and Elevation moves are interleaved by genuine rank, not grouped with all Gaps first.
+- [ ] **Every recommendation carries its inline analysis** — type tag, impact, effort, why-it-ranks-here, source trace, mechanism, "what would change my mind."
+- [ ] **Every persona's gap** appears as a recommendation, OR is explicitly in "Don't build yet" / "What we set aside" with a reason
+- [ ] **All 5 lens labels appear** in the output — in a recommendation or in "What we set aside." Count them: Depth, Breadth, Promise gap, Adjacency, Category leadership. Missing label = fix before proceeding.
+- [ ] **Every lens finding** not already covered by a persona gap appears somewhere, OR is explicitly set aside with a reason
+- [ ] **At least one Gap-type recommendation exists** (no project has zero friction points today)
+- [ ] **At least 2 Build-type recommendations** with verified overlap traces
+- [ ] **At least one Elevation move** that changes who the project primarily serves, not just what it does
 - [ ] **"Don't build yet" has ≥1 item** with a backfire mechanism (no project has zero tempting-but-wrong moves)
-- [ ] **Effort signal exists** somewhere — even rough (small / medium / large) on the top Layer 2 item
-- [ ] **Sequencing noted** if any Layer 1 fix must happen before a Layer 2 item is reachable, OR if any Layer 2 item must happen before a Layer 3 move is viable. In particular: if a Layer 3 move makes a brand/positioning claim (e.g. "privacy-native"), verify that Layer 1 fixes any behavior that contradicts that claim — brand before behavior is a credibility trap.
-- [ ] **Effort differentials explained** — if two Layer 2 items have similar overlap scores but different effort levels, the lower-effort item should be recommended first, or the reasoning for the different ordering must be explicit
+- [ ] **Effort signal (S/M/L) on every recommendation**, not just the top one
+- [ ] **Sequencing noted** where one item must ship before another is reachable. In particular: if an Elevation move makes a brand/positioning claim (e.g. "privacy-native"), verify that a Gap fix addresses any behavior that contradicts that claim — brand before behavior is a credibility trap.
+- [ ] **Goal stated in the header** — the output's "Optimizing for:" line matches what the user confirmed in the gate
 
 If a gap or lens finding is excluded, note why in a brief `## What we set aside` section at the end — this prevents the coverage check from silently passing by omission.
 
@@ -214,12 +237,14 @@ If a gap or lens finding is excluded, note why in a brief `## What we set aside`
 
 ## Phase 4 — Diff + save snapshot + offer to action
 
-**If a previous snapshot was loaded in Phase 1 Source D**, produce a `## What changed since [DATE]` section *before* saving (see `references/memory.md` for the exact format). This is the most valuable part of a repeat run — skip it only if there is genuinely no previous snapshot.
+**If a previous snapshot was loaded in Phase 1 Source D**, produce a `## What changed since [DATE]` section (see `references/memory.md` for the exact format). This is the most valuable part of a repeat run — skip it only if there is genuinely no previous snapshot.
 
 Save to `~/.claude/skills/whats-next-workspace/snapshots/<slug>-<YYYY-MM-DD>.md`. See `references/memory.md`.
 
+**Output order matters.** The ranked recommendations lead. The numbered "At a glance" table is the **last** section before the snapshot footer — it's the scannable index, and it comes after the detail, not before it. See the template.
+
 Offer to action the top pick immediately — don't wait to be asked:
-> "Which of these do you want to pursue? I can: write a spec, find the relevant code and estimate effort, draft a validation question for your users, or run a competitor deep-dive."
+> "Want me to take #1 further? I can: write a spec, find the relevant code and estimate real effort, draft a validation question for your users, or run a competitor deep-dive."
 
 ---
 
@@ -229,62 +254,66 @@ Offer to action the top pick immediately — don't wait to be asked:
 # whats-next: [Project Name]
 > Mode: Skill-as-project (skill-mode.md loaded)   ← include only when in skill-mode; omit for standard repos
 
+**Optimizing for:** [confirmed goal]
 **Signal sources:** [repo data, N HN mentions, competitor scan, previous run DATE / first run]
 **Signal quality:** High / Medium / Low
-**Mode:** Standard / Skill-as-project
 
 ---
 
-## The 5 Personas
-[5 persona cards]
+## Recommendations — best first
+*Ranked by impact toward [goal] ÷ effort.*
 
----
-
-## Layer 1 — Close the Gaps
-### 1. [Fix] ★★★★★
-**Who's blocked:** [personas]
-**Effort:** small / medium / large
-**Mechanism:** ...
-
-## Layer 2 — Build Next
-### 1. [Feature] ★★★★★
+### 1. [Name] · [Gap / Build / Elevation] · Impact ★★★★★ · Effort M
+**Why it ranks #1 (toward [goal]):** [the sentence that earns the top spot]
 **Source:** [Persona X gap] + [lens finding]
-**Effort:** small / medium / large
-**Why it wins:** ...
+**Mechanism:** [concretely what to build/change]
+**What would change my mind:** [the one assumption that, if false, drops it]
+**Sequencing:** [if it depends on another item — else omit]
 
-## Layer 3 — Elevation Moves
-### [Move name]
-**What it changes:** ...
-**Competitor context:** ...
-**The bet:** [single falsifiable condition]
+### 2. [Name] · [Build] · Impact ★★★★☆ · Effort S
+**Why it ranks here (toward [goal]):** ...
+**Source:** ...
+**Mechanism:** ...
+**What would change my mind:** ...
+
+### 3. … [continue — comprehensive, every recommendation, ranked best-first]
+
+[Elevation items use the same header; their "What would change my mind" line IS the falsifiable bet, plus competitor context and a Requires-to-measure note if needed.]
+
+---
 
 ## Don't build yet
 - [Thing] — [specific backfire mechanism]
 
 ## What we set aside
-- [Gap or lens finding] — [why it didn't make the layers]
+- [Gap or lens finding] — [why it didn't make the list]
 
 ---
 
-## Recommendations at a glance
+## Personas behind these
+*The analytical basis for the ranking above — who these recommendations serve.*
+[5 persona cards: Evidence / Their context / Gap they hit / What they'd demand next]
 
-After all layers, always close with this summary table. Every item from Layer 1 and Layer 2 gets a row. Layer 3 moves get rows marked with `🚀`. "Don't build yet" items are excluded.
-
-| # | What | Layer | Impact | Effort | Description |
-|---|------|-------|--------|--------|-------------|
-| 1 | [short name] | L1 / L2 / L3 | High / Med / Low | S / M / L | [5–8 word description] |
-| … | | | | | |
-
-Impact = combined signal strength (persona overlap + lens weight). Effort = S (days) / M (weeks) / L (months). Sort by Impact desc, then Effort asc within the same impact band. Description is the one-line why — what problem it solves, not what it is.
+---
 
 ## What changed since [DATE]
-**Personas:** [new / dropped / confidence changes]
-**Top gaps:** [appeared / disappeared / changed priority]
-**Recommendations:** [moved up/down in layers, newly added]
+*(Repeat runs only — omit on first run.)*
+**Top recommendations:** [moved up/down, newly added, dropped since last run]
+**Still unaddressed from last run:** [items recommended before but not yet built — the most important line]
 **Signal changes:** [new external mentions, issues, competitor moves]
-**Still unaddressed from last run:** [Layer 1/2 items from previous run that weren't built]
+**Personas:** [new / dropped / confidence changes]
 
-*(Omit this section on first run. Include on every subsequent run.)*
+---
+
+## At a glance
+*The scannable index — same order as the recommendations above. Detail is in the sections above.*
+
+| # | What | Type | Impact | Effort | Description |
+|---|------|------|--------|--------|-------------|
+| 1 | [short name] | Gap / Build / Elev | High / Med / Low | S / M / L | [5–8 word why — the problem it solves] |
+| 2 | … | | | | |
+
+Numbered best-first, identical order to the recommendations. Impact = impact toward the goal. Effort = S (days) / M (weeks) / L (months).
 
 ---
 *Snapshot saved. Run again to see what changed.*

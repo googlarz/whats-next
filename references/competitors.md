@@ -44,14 +44,14 @@ After mapping competitors, identify:
 
 **Underserved segments** — user types who appear in competitor reviews but aren't well-served by any existing tool.
 
-## Step 4: Apply to Layer 3
+## Step 4: Apply to Elevation moves
 
-Every elevation move must pass this check:
+Every Elevation-tagged recommendation must pass this check:
 - Does it play to a structural advantage (not just being better at the same thing)?
 - Would the category leader have to abandon their core positioning to copy it?
 - Is there a user segment who currently uses a competitor but would switch for this?
 
-If yes to any of these, it's a real elevation move. If not, it's Layer 2.
+If yes to any of these, it's a real Elevation move. If not, it's a Build.
 
 ## Example competitor analysis format
 

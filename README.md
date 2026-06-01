@@ -2,51 +2,55 @@
 
 > A Claude Code skill for persona-based strategic product analysis.
 
-Tell it a GitHub repo, a project description, or paste your support emails — it identifies your top 5 users, surfaces the gaps they hit, and gives you three layers of recommendations: what to fix now, what to build next, and what would change what your project *is*.
+Tell it a GitHub repo, a project description, or paste your support emails — it confirms what you're optimizing for, identifies your top 5 users, surfaces the gaps they hit, and hands you **one comprehensive list of recommendations ranked best-first against your actual goal** — each with its reasoning attached, and a scannable numbered table at the end.
 
 ## What it produces
 
-Five personas, three layers, one diff.
+A goal, a ranked recommendation list with inline analysis, the personas behind it, a diff, and a table — in that order.
 
 ```
 # whats-next: finance-assistant
-Signal: 17★ repo, 1 closed issue, Reddit (vibe-coder building own tool from scratch),
-        HN (Era Context competitor launched), previous run 4 days ago
+Optimizing for: retention (keep existing users coming back)
+Signal: 17★ repo, 1 closed issue, Reddit (vibe-coder building own tool), HN (Era Context
+        competitor launched), previous run 4 days ago
 
-## The 5 Personas
+## Recommendations — best first
+Ranked by impact toward retention ÷ effort.
 
-### The FIRE Obsessive — Has a spreadsheet, wants Monte Carlo to be a living number
-Evidence: Monte Carlo + FIRE mode built early — suggests this user drove initial features
-Gap: portfolio values require manual entry; FIRE confidence goes stale between sessions
-Demand: daily price sync for tickers already stored (Yahoo Finance, no auth needed)
-
-### The Vibe-Coder — Spent 20 hours building own finance tool from scratch
-Evidence: Reddit r/ClaudeAI post — user doesn't know finance-assistant exists, or
-          hit the git clone + pip install + settings.json wall and quit
-Gap: install journey is a developer workflow; this persona hits a wall at step 1
-Demand: Claude Projects template — paste one file, start chatting in 2 minutes
-
-[3 more personas...]
-
-## Layer 1 — Close the Gaps
-### 1. Hardcoded version string ★★★★★  [Effort: small]
-skill.py line 132 prints "3.1.2" regardless of __version__ — embarrassing on --doctor
-
-## Layer 2 — Build Next
-### 1. Live portfolio price sync ★★★★★  [Effort: medium]
+### 1. Live portfolio price sync · Build · Impact ★★★★★ · Effort M
+Why it ranks #1 (toward retention): FIRE confidence goes stale between sessions — the
+   number users come back for is wrong until they hand-edit. Fixing this is the single
+   biggest pull back into the app.
 Source: FIRE Obsessive gap + Depth lens (what keeps satisfied users going deeper?)
-Yahoo Finance API, no auth, current_value = units × price, 6h TTL, skips cash/real_estate
+Mechanism: Yahoo Finance API, no auth, current_value = units × price, 6h TTL.
+What would change my mind: if users treat it as a one-shot planner, not a recurring check.
 
-## Layer 3 — Elevation Moves
-### The always-on financial layer
-What it changes: from "a skill you invoke" to "financial context in every Claude conversation"
-Competitor context: Era Context (MCP competitor) can't copy privacy-first ambient awareness
-The bet: works only if hook latency < ~100ms and false-positive injection rate < 10%
+### 2. Hardcoded version string · Gap · Impact ★★★☆☆ · Effort S
+Why it ranks here: trust ding on --doctor, cheap to fix, but doesn't itself drive returns.
+Mechanism: skill.py line 132 → read __version__ instead of the literal "3.1.2".
+What would change my mind: nothing — it's just correct. Ships in an afternoon.
+
+### 3. The always-on financial layer · Elevation · Impact ★★★★☆ · Effort L
+What it changes: from "a skill you invoke" to "financial context in every conversation."
+Competitor context: Era Context (MCP competitor) can't copy privacy-first ambient awareness.
+What would change my mind (the bet): works only if hook latency < ~100ms and
+   false-positive injection rate < 10%. Requires: latency + injection instrumentation.
+
+[more recommendations, ranked...]
+
+## Personas behind these
+[5 persona cards — the analytical basis for the ranking above]
 
 ## What changed since 2026-05-13
-Still unaddressed: live portfolio prices (Layer 2 #1 from last run — still not built)
-New gap: Claude Projects template surfaced after vibe-coder Reddit post found
-Addressed: hardcoded version string — fixed in v3.2.0
+Still unaddressed: live portfolio prices (was #1 last run — still not built)
+Addressed: nothing since last run
+
+## At a glance
+| # | What | Type | Impact | Effort | Description |
+|---|------|------|--------|--------|-------------|
+| 1 | Live price sync | Build | High | M | Stale FIRE number is what pulls users back |
+| 2 | Version string fix | Gap | Low | S | Trust ding on --doctor, afternoon fix |
+| 3 | Always-on layer | Elev | High | L | From invoked tool to ambient context |
 ```
 
 ## Install
@@ -96,7 +100,7 @@ If you use Claude.ai (browser) rather than Claude Code, paste the skill's core i
 3. Paste the contents of [`SKILL.md`](./SKILL.md) into the system prompt.
 4. In any conversation in that Project, type your request: `what should I build next for [your project]?`
 
-The core persona analysis, five lenses, and three-layer output work without Claude Code. What you lose without Claude Code: snapshot memory across sessions (no run-to-run diff), live GitHub data collection, and skill-mode detection for analyzing other Claude Code skills as input.
+The core persona analysis, five lenses, and goal-ranked recommendations work without Claude Code. What you lose without Claude Code: snapshot memory across sessions (no run-to-run diff), live GitHub data collection, and skill-mode detection for analyzing other Claude Code skills as input.
 
 ## How it works
 
@@ -118,14 +122,14 @@ Before synthesizing, runs 5 structured questions that persona gaps miss:
 
 Lens findings are labeled `(from: X lens)` in the output.
 
-**Phase 3 — Three-layer synthesis**
-Layers 1 and 2 ranked by genuine overlap — gap→feature traces required, not just persona lists. Layer 3 elevation moves must pass an elevation test (changes who the project serves, not just what it does) and include a single falsifiable bet with measurability requirements.
+**Phase 3 — Rank and synthesize**
+Folds persona gaps and lens findings into one comprehensive list, ranked best-first by **impact toward the confirmed goal ÷ effort**. Recommendations are interleaved by genuine rank, not grouped by type — a cheap fix that serves the goal outranks an expensive feature. Each carries a type tag (Gap / Build / Elevation), its source trace, a mechanism, and a "what would change my mind" line so you can override intelligently. Elevation moves additionally require competitor context and a falsifiable, measurable bet.
 
 **Phase 3.5 — Coverage check**
-Before outputting, verifies every persona gap and lens finding landed somewhere. Gaps that don't make the layers appear in "What we set aside" with a reason — so nothing silently disappears.
+Before outputting, verifies the #1 pick is genuinely the best move toward the goal (not the most exciting), that ranking isn't grouped by type, and that every persona gap and lens finding landed somewhere. Anything excluded appears in "What we set aside" with a reason — so nothing silently disappears.
 
 **Phase 4 — Snapshot + diff + action offer**
-Saves a snapshot to `~/.claude/skills/whats-next-workspace/snapshots/`. On subsequent runs, diffs against the previous snapshot: which gaps are new, which were addressed, and — most usefully — which are *still unaddressed* after multiple runs. The "Still unaddressed" list is the highest-signal output for repeat users. Offers to action the top recommendation: write a spec, find the relevant code, draft a user validation question, or start a competitor deep-dive.
+Saves a snapshot to `~/.claude/skills/whats-next-workspace/snapshots/`. On subsequent runs, diffs against the previous snapshot: which recommendations are new, which were addressed, how the ranking moved, and — most usefully — which are *still unaddressed* after multiple runs. The "Still unaddressed" list is the highest-signal output for repeat users. Offers to action the top recommendation: write a spec, find the relevant code, draft a user validation question, or start a competitor deep-dive.
 
 ## References
 
@@ -139,15 +143,17 @@ The skill bundles five reference files used at runtime:
 | `references/actioning.md` | Spec kickoff, effort estimation, validation prompts |
 | `references/memory.md` | Snapshot format, diff logic, time-series comparison |
 
-## Why three layers
+## Why goal-ranked, not just a list
 
-Most "what to build next" tools produce a feature list. The three-layer structure distinguishes:
+Most "what to build next" tools produce a flat feature list, implicitly ranked by "how many people want it." But "best" is meaningless without an objective — the right next move for a builder chasing revenue differs from one chasing adoption or cutting maintenance load. So the skill confirms your goal up front and ranks **every** recommendation by impact toward *that* goal ÷ effort.
 
-- **Layer 1** — you're losing users *today* to friction that doesn't require new features to fix
-- **Layer 2** — new capabilities ranked by how many distinct user types want them (3 quiet personas > 1 loud one)
-- **Layer 3** — bets that require the project to become something different, not just better
+Each recommendation still carries a type, so you know what kind of move it is:
 
-The "Don't build yet" section gives a specific backfire mechanism for each item, not a prioritization judgment. "This feature works against itself because X" is a reason. "Not a priority" is not.
+- **Gap** — you're losing users *today* to friction that doesn't require new features to fix
+- **Build** — a new capability, driven by genuine overlap across distinct user types (3 quiet personas > 1 loud one)
+- **Elevation** — a bet that requires the project to become something different, not just better
+
+But the *ranking* cuts across all three: a cheap Gap that unblocks your goal beats an exciting Build that doesn't. The "Don't build yet" section gives a specific backfire mechanism for each excluded item, not a prioritization judgment. "This feature works against itself because X" is a reason. "Not a priority" is not.
 
 ## Developed with
 
