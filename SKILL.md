@@ -259,12 +259,17 @@ The analysis travels **with** the recommendation — that is what "best recommen
 ### Elevation discipline (applies to Elevation-tagged items)
 Include **at least 2** Elevation moves from different angles: one that changes **who** the project serves, one that changes **how** value is delivered (pull → push, sync → async, individual → ambient).
 
-**Elevation moves are ranked inline like everything else** — they carry the `Elevation` tag and take their position by impact ÷ effort, never a separate trailing section. A big elevation bet that ranks low because it's high-effort and long-horizon is honest — it's a direction, not your next action.
+**Elevation moves are ranked inline like everything else** — they carry the `Elevation` tag and take their position by impact ÷ effort, never a separate trailing section.
 
-Elevation items carry the **same fields as every other recommendation** (including Mechanism — what concretely to build), plus three more:
-- **Competitor context required:** name what competitors do or don't do. "Build X in a way structurally impossible for competitor Y to copy" is elevation. "Build X, which Y already does" is not.
-- **Falsifiable bet:** the "what would change my mind" line for an Elevation item must be a single make-or-break condition, wrong-able: "Works only if X," not "works if it's good enough."
-- **Measurability check:** if the project can't currently measure that bet, append "Requires: [what to instrument]." A bet that can't be measured is unfalsifiable in practice, however specific it sounds.
+Elevation items carry **all the same fields as every other recommendation**, with these three added as **separate labeled lines** (not folded into the prose of "Why it ranks here"):
+
+```
+**Competitor context:** [what rivals do/don't do that makes this structurally yours — must be a discrete labeled field, not prose]
+**What would change my mind:** [the falsifiable bet: "Works only if X." Add "Requires: [what to instrument]" if the project can't measure it today.]
+**Success signal:** [early observable indicator]
+```
+
+The three Elevation-specific fields are **always labeled and always separate** — a grader reading the output must be able to find them without parsing prose. Merging them into "Why it ranks here" is a field-completeness failure.
 
 ### Don't build yet
 Specific backfire mechanism per item — not prioritization. "Building Y would require solving Z first, and Z is a harder problem than Y appears" is a reason. "Not a priority" is not.
@@ -300,7 +305,7 @@ Before outputting, verify every box is checked. If any fails, fix it before proc
 - [ ] **No phantom citations** — every persona named in a Source line has a card in "Personas behind these." Missing Voices personas are NOT valid Source citations — they're blind spots, not evidence. Every lens named in Source actually appears in the lens-coverage line.
 - [ ] **No self-narration** — the output never references its own machinery. Banned: naming a reference file/line ("per skill-mode.md line 110"), "per the coverage check," "gate skipped," a lens "firing"/"accounted for"/"has no purchase"/"noted rather than forced," naming the Trust-vs-Security split or domain sweep as a mechanic, calling a persona "dead," and naming the output's own sections as scaffolding ("the validation block," "the At-a-glance table tells you…"). State the *finding*, never that a rule or section produced it. Persona selection is invisible — never "this replaces X." A reader shouldn't be able to tell the skill has phases.
 - [ ] **Ratings actually sort** — not more than half the recs in the top ★ tier, AND not more than half at the same effort level. If both axes collapse, the ranking is asserted, not computed. **Specific trap:** if rec #N+1 has equal ★ but *lower* effort than rec #N, impact÷effort says #N+1 should rank above #N. If you've inverted this, one clause in "Why it ranks here" must explain why (e.g. "after #N because it depends on #N shipping first"). Unexplained inversion = ranking error.
-- [ ] **Sequencing is consistent** — scan all Sequencing fields as a pair: if rec #X says "after #N," then (a) #N's Sequencing cannot say "none" — it must acknowledge what depends on it, and (b) check whether #X also has other unlisted dependencies that belong there too.
+- [ ] **Sequencing is consistent** — build the full dependency graph before writing Sequencing fields. If #3 depends on both #1 and #2, write "after #1 and #2" — not just "after #1." If #5 says "after #2," then #2's Sequencing must say "none; #5 depends on this" — not "none" with no acknowledgment. Read every Sequencing field as a pair with the rec it references.
 - [ ] **Type minimums:** ≥1 Gap, ≥2 Builds with overlap traces, and ≥2 Elevation moves from different angles (one changes *who*, one changes *how*) — ranked inline, never a trailing section.
 - [ ] **If `Signal quality: Low`** — the "Low Signal — Gather Before Re-Running" validation block appears immediately before the At-a-glance table. Questions must be domain-specific (not generic). A Low-signal run without this block has silently dropped a mandated section — check before closing.
 - [ ] **Competitor claims are tagged** — any named competitor, named product feature, or "no competitor does X" assertion that you did not directly verify gets `[unverified]` inline. This applies everywhere: Elevation competitor-context blocks, mechanism descriptions ("competitor Y doesn't have Z"), and comparison tables. The builder needs to know what's checked vs. inferred before publishing any comparison publicly.
