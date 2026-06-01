@@ -128,7 +128,7 @@ Archetypes (adapt — don't force):
 4. Casual / non-technical user
 5. Team deployer — installs it for others
 
-Ask: **who is the least technical person who could plausibly benefit?** That persona belongs in the set.
+Ask: **who is the least technical person who could plausibly benefit?** That persona belongs in the set. If that persona turns out to be "dead" — their only gap is unsolvable within the project (e.g. "can't install it without a developer" when the project can't change that) — don't silently backfill the slot with another technical persona and quietly raise the floor. Either reach down to the lowest persona who *does* have a solvable gap, or state plainly that the category has no viable non-technical user. A silently all-technical persona set on a tool that could serve normal people is a miss.
 
 **Avoid overlap.** Each persona must drive at least one different recommendation. **Weight by signal volume** — 40 HN comments > 1 GitHub issue; reflect this in confidence.
 
@@ -246,26 +246,16 @@ Specific backfire mechanism per item — not prioritization. "Building Y would r
 
 Before outputting, verify every box is checked. If any fails, fix it before proceeding:
 
-- [ ] **The #1 recommendation is genuinely the best move toward the stated goal** — not the most exciting, not the biggest. Re-check: does a cheaper item further down actually serve the goal better? If so, it should be #1. This is the single most important check.
-- [ ] **Ranking is by goal-impact ÷ effort, not by type** — verify Gaps, Builds, and Elevation moves are interleaved by genuine rank, not grouped with all Gaps first.
-- [ ] **Every recommendation carries its inline analysis** — type tag, impact, effort, why-it-ranks-here, source trace, mechanism, "what would change my mind."
-- [ ] **Every persona's gap** appears as a recommendation, OR is explicitly in "Don't build yet" / "What we set aside" with a reason
-- [ ] **No phantom citations** — every persona or lens named in a "Source:" line actually appears (personas as cards in "Personas behind these"; all 5 lenses by label). Citing a persona the reader can't inspect is a defect.
-- [ ] **Impact ratings discriminate** — if more than half the recommendations share the top impact tier (★★★★★ / High), the ranking isn't sorting. Re-spread by genuine goal-impact, or let effort break the ties so the order is real.
-- [ ] **No self-narration** — the output never references its own machinery ("per the coverage check," "so the Adjacency lens is accounted for"). Lens/domain/gate bookkeeping is internal; only the findings appear.
-- [ ] **All 5 lens labels appear** in the output — in a recommendation or in "What we set aside." Count them: Depth, Breadth, Promise gap, Adjacency, Category leadership. Missing label = fix before proceeding.
-- [ ] **Domain sweep was run** (Phase 2.6) — each of the 8 domains was consciously considered. Any domain that obviously applies to this category but was set aside (e.g. Security for a tool holding money/credentials/PII) is named in "What we set aside" with a reason. A category-obvious domain silently missing = fix before proceeding.
-- [ ] **Every lens finding** not already covered by a persona gap appears somewhere, OR is explicitly set aside with a reason
-- [ ] **At least one Gap-type recommendation exists** (no project has zero friction points today)
-- [ ] **At least 2 Build-type recommendations** with verified overlap traces
-- [ ] **At least one Elevation move** that changes who the project primarily serves, not just what it does — **ranked inline in the list, NOT in a separate trailing section**
-- [ ] **Nothing follows the "At a glance" table** except the snapshot footer — no trailing "Elevation moves" block
-- [ ] **"Don't build yet" has ≥1 item** with a backfire mechanism (no project has zero tempting-but-wrong moves)
-- [ ] **Effort signal (S/M/L) on every recommendation**, not just the top one
-- [ ] **Sequencing noted** where one item must ship before another is reachable. In particular: if an Elevation move makes a brand/positioning claim (e.g. "privacy-native"), verify that a Gap fix addresses any behavior that contradicts that claim — brand before behavior is a credibility trap.
-- [ ] **Goal stated in the header** — the output's "Optimizing for:" line matches what the user confirmed in the gate
-
-If a gap or lens finding is excluded, note why in a brief `## What we set aside` section at the end — this prevents the coverage check from silently passing by omission.
+- [ ] **#1 is genuinely the best move toward the goal** — not the most exciting or biggest. Does a cheaper item lower down serve the goal better? Then it's #1. The single most important check.
+- [ ] **Ranked by goal-impact ÷ effort, and the ratings discriminate** — types interleaved (not grouped); if more than half the recs share the top ★ tier the ranking isn't sorting, so re-spread or let effort break ties. The At-a-glance table carries the same ★, not collapsed High/Med/Low.
+- [ ] **Every rec carries all six fields — Elevations included** — type · impact · effort header, plus Source, Mechanism, "what would change my mind," and Sequencing. Elevations are *not* exempt from Source / Mechanism / Sequencing (the most common silent omission). Elevations add Competitor context + a falsifiable, measurable bet.
+- [ ] **Nothing accounted for by silence** — every persona gap, all 5 lenses (per the lens-coverage line), and every domain category-adjacent to the project's core either drives a rec or is named in "What we set aside" with a reason.
+- [ ] **No phantom citations** — every persona named in a Source line has a card in "Personas behind these"; every lens named actually appears.
+- [ ] **No self-narration** — the output never references its own machinery. Banned: naming a reference file or line ("per skill-mode.md line 110"), "per the coverage check," "gate skipped," "the Adjacency lens is accounted for," a lens/split "firing," or naming the Trust-vs-Security split or domain sweep as a mechanic. State the *finding*, never that a rule produced it. Persona swaps are invisible — never "this replaces the dead persona." A reader shouldn't be able to tell the skill has phases.
+- [ ] **Type minimums:** ≥1 Gap, ≥2 Builds with overlap traces, ≥1 Elevation that changes *who* or *how* — ranked inline, never a trailing section.
+- [ ] **"Don't build yet" has ≥1 item** with a backfire mechanism (not a priority judgment).
+- [ ] **Brand before behavior:** if an Elevation makes a positioning claim ("privacy-native"), a Gap fixes any current behavior that contradicts it — else the claim is a credibility trap.
+- [ ] **Structure:** goal in the header matches the gate; recommendations lead; the At-a-glance table is last with nothing after it but the footer.
 
 ---
 
@@ -297,20 +287,27 @@ Offer to action the top pick immediately — don't wait to be asked:
 
 ### 1. [Name] · [Gap / Build / Elevation] · Impact ★★★★★ · Effort M
 **Why it ranks #1 (toward [goal]):** [the sentence that earns the top spot]
-**Source:** [Persona X gap] + [lens finding]
+**Source:** [Persona X gap] + [lens/domain finding]
 **Mechanism:** [concretely what to build/change]
 **What would change my mind:** [the one assumption that, if false, drops it]
-**Sequencing:** [if it depends on another item — else omit]
+**Sequencing:** [terse — "after #3" or "none". Don't restate the rationale.]
 
 ### 2. [Name] · [Build] · Impact ★★★★☆ · Effort S
 **Why it ranks here (toward [goal]):** ...
 **Source:** ...
 **Mechanism:** ...
 **What would change my mind:** ...
+**Sequencing:** none
 
-### 3. … [continue — comprehensive, every recommendation, ranked best-first]
+### 3. [Name] · [Elevation] · Impact ★★★☆☆ · Effort L
+**Why it ranks here (toward [goal]):** ...
+**Source:** [persona/lens/domain — REQUIRED, same as any rec]
+**Mechanism:** [concretely what to build — REQUIRED, elevations are not exempt]
+**Competitor context:** [what rivals do/don't do that makes this structurally yours]
+**What would change my mind:** [the falsifiable bet — "works only if X." Add "Requires: [what to instrument]" if unmeasurable today.]
+**Sequencing:** [terse]
 
-[Elevation items use the same header; their "What would change my mind" line IS the falsifiable bet, plus competitor context and a Requires-to-measure note if needed.]
+### … [continue — comprehensive, every recommendation, ranked best-first. Every rec — Gap, Build, AND Elevation — carries all six fields: Source, Mechanism, Sequencing are never dropped.]
 
 ---
 
@@ -319,6 +316,8 @@ Offer to action the top pick immediately — don't wait to be asked:
 
 ## What we set aside
 - [Gap or lens finding] — [why it didn't make the list]
+
+*Lens coverage: Depth → [#N or set-aside] · Breadth → [#N] · Promise gap → [#N] · Adjacency → [#N] · Category leadership → [#N].* ← one terse line; every lens maps to a rec number or "set-aside." This makes a dropped lens impossible to miss.
 
 ---
 
@@ -342,10 +341,10 @@ Offer to action the top pick immediately — don't wait to be asked:
 
 | # | What | Type | Impact | Effort | Description |
 |---|------|------|--------|--------|-------------|
-| 1 | [short name] | Gap / Build / Elev | High / Med / Low | S / M / L | [5–8 word why — the problem it solves] |
-| 2 | … | | | | |
+| 1 | [short name] | Gap / Build / Elev | ★★★★★ | S / M / L | [5–8 word why — the problem it solves] |
+| 2 | … | | ★★★★☆ | | |
 
-Numbered best-first, identical order to the recommendations. Impact = impact toward the goal. Effort = S (days) / M (weeks) / L (months).
+Numbered best-first, identical order to the recommendations. **Impact column carries the same ★ rating as the recommendation** — not a collapsed High/Med/Low, which buckets 4★ and 5★ together and makes the index stop sorting. Effort = S (days) / M (weeks) / L (months).
 
 ---
 *Snapshot saved. Run again to see what changed.*

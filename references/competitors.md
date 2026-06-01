@@ -2,6 +2,8 @@
 
 Every elevation move needs competitor context — you can't identify a moat without knowing what you're competing against.
 
+**Verifiability rule:** A competitor claim a recommendation *rests on* must be checkable — name the source (a search result, a repo, a review thread) or tag it `[unverified]`. Do not present a competitor's existence, feature set, or gap as established fact when you only inferred it. Two recommendations silently resting on a competitor you half-remember is how a confident analysis becomes wrong. If a moat argument depends on "competitor X can't do Y," you must have actually checked that X can't.
+
 ## Step 1: Find alternatives
 
 Search for what users actually compare the project to:
