@@ -107,7 +107,7 @@ Because skill users are Claude Code users (or Claude users), the technical floor
 - **Casual:** occasional Claude Code user — invokes skills when needed but doesn't maintain a curated stack
 - **Non-technical floor:** Claude.ai users who encounter skill-like behavior through Cowork or shared projects
 
-**When to include the non-technical persona:** Ask whether a non-developer who uses Claude through a browser (not Claude Code) could plausibly benefit from this skill's *domain* — not just the skill itself. If yes (e.g. health, finance, productivity), include them with the gap being "can't install skills directly." If the skill's domain is inherently technical (code review, CLI tools, shell scripts), the non-technical persona doesn't fit — replace it with a different archetype on the technical spectrum, such as: an internal team member who has Claude Code but avoids skill configuration, or a new Claude Code adopter who hasn't built skill literacy yet. Don't force a persona that the evidence doesn't support.
+**When to include the non-technical persona:** Ask whether a non-developer who uses Claude through a browser (not Claude Code) could plausibly benefit from this skill's *domain* — not just the skill itself. If yes (e.g. health, finance, productivity), include them — but their gap must drive a real recommendation. If their *only* gap is "can't install skills directly," that's a dead persona: it drives nothing buildable within the skill (especially under a distribution goal), and every persona must drive at least one ranked recommendation. In that case, replace it with an in-spectrum archetype: an internal team member who has Claude Code but avoids skill configuration, or a new Claude Code adopter who hasn't built skill literacy yet. Same rule when the skill's domain is inherently technical (code review, CLI tools). Don't force a persona that the evidence doesn't support, and don't card a persona whose only gap is unsolvable within the skill.
 
 ## Output adjustments in skill mode
 
@@ -122,10 +122,12 @@ In the persona evidence field, cite skill-specific signals:
 - "Evidence: skill has no external repo, inferred as single-author use"
 - "Evidence: 3 HN comments mention this skill category positively"
 
-In Elevation moves, always include publication as a candidate:
+**Check existing capabilities FIRST — before proposing anything.** The canonical skill elevations below (MCP packaging, proactive triggers, open format) are worthless if the skill already ships them. Read the SKILL.md's capability list and grep for the feature before recommending it. If it already exists, it is **not** a recommendation — note it as already-built (it can still inform positioning). The fastest way to discredit this whole analysis is to recommend a feature the author shipped three releases ago.
+
+In Elevation moves, include publication as a candidate *only if not already published*:
 - If unpublished: "Publish to GitHub + awesome-claude-skills" is almost always an Elevation move — it changes the project from personal tool to community resource
 - If published: the Elevation move should be about distribution, integration, or category expansion
 
-**Elevation test for skills:** "Publish" is the baseline elevation. For a second or third Elevation move, ask: does this change what the skill *is*, not just what it *does*? Examples of genuine skill-level elevation: packaging as an MCP server (changes interface), defining an open data format (becomes a protocol), enabling proactive triggers (changes from reactive to ambient). Extending existing capabilities (even significantly) is a Build, not an Elevation.
+**Elevation test for skills:** "Publish" is the baseline elevation (skip it if already done). For a second or third Elevation move, ask: does this change what the skill *is*, not just what it *does*? Examples of genuine skill-level elevation **that the skill doesn't already do**: packaging as an MCP server (changes interface), defining an open data format (becomes a protocol), enabling proactive triggers (changes from reactive to ambient). Extending existing capabilities (even significantly) is a Build, not an Elevation.
 
 **Gap vs. demand in skill mode:** The gap is what breaks or frustrates the persona *today* with the current skill. The demand is what they would ask to be built. These should differ in specificity level: gap = "skill tries gh commands on a local path and fails silently", demand = "skill-mode detection with confirmed Mode: Skill-as-project in header". If gap and demand are close paraphrases of each other, the gap isn't specific enough.

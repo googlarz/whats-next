@@ -75,12 +75,14 @@ For everything else, collect from four sources in parallel:
 
 **Source A — Repo data:**
 ```bash
-gh repo view <owner/repo> --json name,description,stargazerCount,forkCount,topics,primaryLanguage,readme
+gh repo view <owner/repo> --json name,description,stargazerCount,forkCount,repositoryTopics,primaryLanguage
 gh issue list --repo <owner/repo> --limit 50 --json title,labels,comments,state
 gh pr list --repo <owner/repo> --limit 20 --json title,body,state
 gh release list --repo <owner/repo> --limit 10
 ```
-CHANGELOG bugs are especially valuable — a locale bug means real users in that locale; a 50MB import fix means someone hit it.
+(The README field isn't reliable via `--json readme`; fetch it separately if needed: `gh repo view <owner/repo> | head -40` or read the raw file.) CHANGELOG bugs are especially valuable — a locale bug means real users in that locale; a 50MB import fix means someone hit it.
+
+**Description-only input (no repo, not a skill):** Sources A–D assume a GitHub repo. When the input is a plain project description (a private/pre-launch app, an idea), you have no repo signal — don't pretend otherwise. Collect what you can: Source C (competitors — always available) and Source B (category conversations on HN/Reddit). Then lean on the pre-launch persona construction in Phase 2 and mark signal quality honestly. A description-only run is legitimately Low or Medium signal; say so.
 
 **Source B — External conversations:** What people say outside the repo (HN, Reddit, web). See `references/external-signals.md`. These are the users who didn't care enough to file an issue — often the most representative.
 
@@ -92,7 +94,7 @@ CHANGELOG bugs are especially valuable — a locale bug means real users in that
 
 1. **Label the quality** — `Signal quality: Low` in the signal header.
 2. **Mark personas** — tag all inferred personas as `[Hypothesis]`.
-3. **Generate a validation block** — append this section at the END of the output:
+3. **Generate a validation block** — place this section immediately **before** the "At a glance" table (the table stays strictly last):
 
 ```
 ## Low Signal — Gather Before Re-Running
@@ -173,6 +175,30 @@ Lens findings feed into the ranked recommendations alongside persona gaps. **All
 
 ---
 
+## Phase 2.6 — Domain coverage sweep (anti-omission)
+
+The five lenses are *angles*; they can all fire and still miss an entire *domain* that no persona happened to raise. A finance tool with no Security item, an auth library with no threat-model item, a CLI with no install/distribution item — that's a silent hole, and silent holes are how "comprehensive" lies. The sweep is the difference between "what occurred to me" and "what I verified I didn't skip."
+
+Before ranking, walk this checklist. For each domain, either surface a recommendation (it enters the Phase 3 ranking) or consciously decide it doesn't apply. This is fast — most domains resolve in one line.
+
+| Domain | The question to ask |
+|--------|---------------------|
+| **Trust (perception)** | Does the user understand and believe where their data goes? Is the handling *disclosed*? |
+| **Security (technical)** | Is data-at-rest, credentials, and key handling actually *protected*? (Distinct from trust — a tool can disclose clearly and still encrypt nothing.) |
+| **Data & input** | Import/export breadth, format coverage, migration, silent data loss / mis-parse |
+| **Reliability** | Failure modes, error recovery, what breaks under edge input or scale |
+| **Performance** | Anything slow enough to make a user quit or distrust the result |
+| **Accessibility / reach** | Who's locked out — by language, disability, platform, or skill level |
+| **Distribution / onboarding** | How a brand-new user gets from zero to first value |
+| **Monetization / sustainability** | If revenue or sustainability is the goal: is there *any* surface for it today? |
+| **Compliance / legal** | Regulated domain (finance, health, kids, EU data)? Any obligation unmet? |
+
+**Output discipline:** Domains that surface a real issue become ranked recommendations, tagged `(from: X domain)` like a lens. A domain that is **category-adjacent to the project's core function** (data-integrity for a tool that parses files; security for anything holding money/credentials/PII; distribution for a CLI) must be **explicitly dispositioned** — either a recommendation or a line in "What we set aside" with a reason. Only domains genuinely *orthogonal* to the project appear nowhere; don't clutter the output with "N/A" lines for those. The test: if a reader who knows the category would expect a domain to be addressed, silence on it is a defect — name it in "What we set aside."
+
+Bias check: do not force a domain that doesn't fit just to fill the table, and do not skip one because no persona raised it. The whole point is to catch the domain no persona raised.
+
+---
+
 ## Phase 3 — Rank and synthesize
 
 Turn persona gaps + lens findings into **one comprehensive list of recommendations, ranked best-first**. The rank — not the layer — is the organizing principle of the output. The user wants the single best move at the top *with its reasoning attached*, then the next best, all the way down. Don't group by type and make the reader hunt; interleave and rank.
@@ -199,13 +225,14 @@ The analysis travels **with** the recommendation — that is what "best recommen
 - **Source trace** — which persona gap(s) and/or lens finding(s) drive it. Only count a persona if their specific gap implies demand for this specific item. A rating without a basis is unverifiable.
 - **Mechanism** — concretely what to build or change.
 - **What would change my mind** — the one assumption that, if false, drops this item down or off the list. One line. This lets the builder, who knows things you don't, override intelligently.
-- **Sequencing** — if it depends on another item shipping first, say so.
+- **Sequencing** — required field. Write the dependency ("after #2 — needs the landing page first") or "none." Forcing the word "none" makes you actually check, instead of leaving a real dependency buried in prose.
 
 ### Elevation discipline (applies to Elevation-tagged items)
 Include **at least 2** Elevation moves from different angles: one that changes **who** the project serves, one that changes **how** value is delivered (pull → push, sync → async, individual → ambient).
 
-**Elevation moves are ranked into the single best-first list like everything else** — they carry the `Elevation` tag inline and take their position by impact-toward-goal ÷ effort. Do **not** append them as a separate "Elevation moves" section at the bottom: that recreates the old Layer 3, breaks the "one ranked list" the user asked for, and pushes content past the table that must come last. If a big elevation bet ranks low because it's high-effort and long-horizon, that's honest — it's a direction, not your next action — and the reader still sees it in the list and the table.
+**Elevation moves are ranked inline like everything else** — they carry the `Elevation` tag and take their position by impact ÷ effort, never a separate trailing section. A big elevation bet that ranks low because it's high-effort and long-horizon is honest — it's a direction, not your next action.
 
+Elevation items carry the **same fields as every other recommendation** (including Mechanism — what concretely to build), plus three more:
 - **Competitor context required:** name what competitors do or don't do. "Build X in a way structurally impossible for competitor Y to copy" is elevation. "Build X, which Y already does" is not.
 - **Falsifiable bet:** the "what would change my mind" line for an Elevation item must be a single make-or-break condition, wrong-able: "Works only if X," not "works if it's good enough."
 - **Measurability check:** if the project can't currently measure that bet, append "Requires: [what to instrument]." A bet that can't be measured is unfalsifiable in practice, however specific it sounds.
@@ -223,7 +250,11 @@ Before outputting, verify every box is checked. If any fails, fix it before proc
 - [ ] **Ranking is by goal-impact ÷ effort, not by type** — verify Gaps, Builds, and Elevation moves are interleaved by genuine rank, not grouped with all Gaps first.
 - [ ] **Every recommendation carries its inline analysis** — type tag, impact, effort, why-it-ranks-here, source trace, mechanism, "what would change my mind."
 - [ ] **Every persona's gap** appears as a recommendation, OR is explicitly in "Don't build yet" / "What we set aside" with a reason
+- [ ] **No phantom citations** — every persona or lens named in a "Source:" line actually appears (personas as cards in "Personas behind these"; all 5 lenses by label). Citing a persona the reader can't inspect is a defect.
+- [ ] **Impact ratings discriminate** — if more than half the recommendations share the top impact tier (★★★★★ / High), the ranking isn't sorting. Re-spread by genuine goal-impact, or let effort break the ties so the order is real.
+- [ ] **No self-narration** — the output never references its own machinery ("per the coverage check," "so the Adjacency lens is accounted for"). Lens/domain/gate bookkeeping is internal; only the findings appear.
 - [ ] **All 5 lens labels appear** in the output — in a recommendation or in "What we set aside." Count them: Depth, Breadth, Promise gap, Adjacency, Category leadership. Missing label = fix before proceeding.
+- [ ] **Domain sweep was run** (Phase 2.6) — each of the 8 domains was consciously considered. Any domain that obviously applies to this category but was set aside (e.g. Security for a tool holding money/credentials/PII) is named in "What we set aside" with a reason. A category-obvious domain silently missing = fix before proceeding.
 - [ ] **Every lens finding** not already covered by a persona gap appears somewhere, OR is explicitly set aside with a reason
 - [ ] **At least one Gap-type recommendation exists** (no project has zero friction points today)
 - [ ] **At least 2 Build-type recommendations** with verified overlap traces
@@ -243,8 +274,6 @@ If a gap or lens finding is excluded, note why in a brief `## What we set aside`
 **If a previous snapshot was loaded in Phase 1 Source D**, produce a `## What changed since [DATE]` section (see `references/memory.md` for the exact format). This is the most valuable part of a repeat run — skip it only if there is genuinely no previous snapshot.
 
 Save to `~/.claude/skills/whats-next-workspace/snapshots/<slug>-<YYYY-MM-DD>.md`. See `references/memory.md`.
-
-**Output order matters.** The ranked recommendations lead. The numbered "At a glance" table is the **last** section before the snapshot footer — it's the scannable index, and it comes after the detail, not before it. See the template.
 
 Offer to action the top pick immediately — don't wait to be asked:
 > "Want me to take #1 further? I can: write a spec, find the relevant code and estimate real effort, draft a validation question for your users, or run a competitor deep-dive."
@@ -321,8 +350,6 @@ Numbered best-first, identical order to the recommendations. Impact = impact tow
 ---
 *Snapshot saved. Run again to see what changed.*
 ```
-
-**Nothing appears after the "At a glance" table except the snapshot footer.** If you find yourself writing an "Elevation moves" block below the table, stop — those items belong *in* the ranked recommendations above, interleaved by rank. The table is the last content section, every run.
 
 ---
 
