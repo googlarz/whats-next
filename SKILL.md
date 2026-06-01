@@ -225,7 +225,7 @@ The analysis travels **with** the recommendation — that is what "best recommen
 - **Source trace** — which persona gap(s) and/or lens finding(s) drive it. Only count a persona if their specific gap implies demand for this specific item. A rating without a basis is unverifiable.
 - **Mechanism** — concretely what to build or change.
 - **What would change my mind** — the one assumption that, if false, drops this item down or off the list. One line. This lets the builder, who knows things you don't, override intelligently.
-- **Sequencing** — required field. Write the dependency ("after #2 — needs the landing page first") or "none." Forcing the word "none" makes you actually check, instead of leaving a real dependency buried in prose.
+- **Sequencing** — required field, **≤6 words**: "after #2" or "none." Hard cap. If you're tempted to explain *why* it depends on #2, that reasoning belongs in "Why it ranks here," not here. And it must be consistent: if #5 says "after #2," then #2's sequencing cannot be "none" — the dependency is mutual information.
 
 ### Elevation discipline (applies to Elevation-tagged items)
 Include **at least 2** Elevation moves from different angles: one that changes **who** the project serves, one that changes **how** value is delivered (pull → push, sync → async, individual → ambient).
@@ -247,12 +247,14 @@ Specific backfire mechanism per item — not prioritization. "Building Y would r
 Before outputting, verify every box is checked. If any fails, fix it before proceeding:
 
 - [ ] **#1 is genuinely the best move toward the goal** — not the most exciting or biggest. Does a cheaper item lower down serve the goal better? Then it's #1. The single most important check.
-- [ ] **Ranked by goal-impact ÷ effort, and the ratings discriminate** — types interleaved (not grouped); if more than half the recs share the top ★ tier the ranking isn't sorting, so re-spread or let effort break ties. The At-a-glance table carries the same ★, not collapsed High/Med/Low.
+- [ ] **Ranked by goal-impact ÷ effort** — types interleaved, not grouped. The At-a-glance table carries the same ★ as each rec, not a collapsed High/Med/Low.
 - [ ] **Every rec carries all six fields — Elevations included** — type · impact · effort header, plus Source, Mechanism, "what would change my mind," and Sequencing. Elevations are *not* exempt from Source / Mechanism / Sequencing (the most common silent omission). Elevations add Competitor context + a falsifiable, measurable bet.
 - [ ] **Nothing accounted for by silence** — every persona gap, all 5 lenses (per the lens-coverage line), and every domain category-adjacent to the project's core either drives a rec or is named in "What we set aside" with a reason.
 - [ ] **No phantom citations** — every persona named in a Source line has a card in "Personas behind these"; every lens named actually appears.
-- [ ] **No self-narration** — the output never references its own machinery. Banned: naming a reference file or line ("per skill-mode.md line 110"), "per the coverage check," "gate skipped," "the Adjacency lens is accounted for," a lens/split "firing," or naming the Trust-vs-Security split or domain sweep as a mechanic. State the *finding*, never that a rule produced it. Persona swaps are invisible — never "this replaces the dead persona." A reader shouldn't be able to tell the skill has phases.
-- [ ] **Type minimums:** ≥1 Gap, ≥2 Builds with overlap traces, ≥1 Elevation that changes *who* or *how* — ranked inline, never a trailing section.
+- [ ] **No self-narration** — the output never references its own machinery. Banned: naming a reference file/line ("per skill-mode.md line 110"), "per the coverage check," "gate skipped," a lens "firing"/"accounted for"/"has no purchase"/"noted rather than forced," naming the Trust-vs-Security split or domain sweep as a mechanic, calling a persona "dead," and naming the output's own sections as scaffolding ("the validation block," "the At-a-glance table tells you…"). State the *finding*, never that a rule or section produced it. Persona selection is invisible — never "this replaces X." A reader shouldn't be able to tell the skill has phases.
+- [ ] **Ratings actually sort** — not more than half the recs in the top ★ tier, AND not more than half at the same effort (S/M/L). If both axes collapse, the ranking is asserted, not computed — re-spread or state the one-clause tiebreak when two recs share both ★ and effort.
+- [ ] **Type minimums:** ≥1 Gap, ≥2 Builds with overlap traces, and ≥2 Elevation moves from different angles (one changes *who*, one changes *how*) — ranked inline, never a trailing section.
+- [ ] **If `Signal quality: Low`** — the "Low Signal — Gather Before Re-Running" validation block appears immediately before the At-a-glance table. A Low-signal run without it has silently dropped a mandated section.
 - [ ] **"Don't build yet" has ≥1 item** with a backfire mechanism (not a priority judgment).
 - [ ] **Brand before behavior:** if an Elevation makes a positioning claim ("privacy-native"), a Gap fixes any current behavior that contradicts it — else the claim is a credibility trap.
 - [ ] **Structure:** goal in the header matches the gate; recommendations lead; the At-a-glance table is last with nothing after it but the footer.
@@ -290,7 +292,7 @@ Offer to action the top pick immediately — don't wait to be asked:
 **Source:** [Persona X gap] + [lens/domain finding]
 **Mechanism:** [concretely what to build/change]
 **What would change my mind:** [the one assumption that, if false, drops it]
-**Sequencing:** [terse — "after #3" or "none". Don't restate the rationale.]
+**Sequencing:** [≤6 words — "after #3" or "none". Never restate the rationale.]
 
 ### 2. [Name] · [Build] · Impact ★★★★☆ · Effort S
 **Why it ranks here (toward [goal]):** ...

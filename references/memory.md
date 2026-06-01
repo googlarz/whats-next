@@ -42,6 +42,8 @@ When a previous snapshot exists, after completing the new analysis, produce a di
 
 The "still unaddressed" section is the most valuable part — it shows whether recommendations are being acted on or accumulating. If the same recommendation appears 3 runs in a row unbuilt, it's either not actually a priority or it's harder to build than it looked — say so, and consider dropping its rank.
 
+**If the previous snapshot used an older format** (or a different mode/goal), don't force a field-by-field rank diff that doesn't map. Fall back to a feature/release diff — "since last run the project shipped X, Y; gap Z is now closed" — and note the format/goal change in one line. A coherent feature diff beats a broken rank diff.
+
 ## Snapshot format
 
 The snapshot file should be the full analysis output — no trimming. Future runs load the full content for diffing.

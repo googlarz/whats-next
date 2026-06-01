@@ -2,6 +2,8 @@
 
 Repo issues are the least honest signal — only users who care enough to file them. Search external sources for what people say when they're not talking to the maintainer.
 
+**Tag what you couldn't confirm.** When a recommendation rests on a named external product, a "Show HN," or an "X is actively used" claim that you surfaced from search but did not actually verify, tag it `[unverified]` inline. A confident-sounding competitor name that turns out wrong discredits the whole analysis — and the reader can't tell your verified findings from your half-remembered ones unless you mark them.
+
 ## Hacker News (Algolia API — no auth required)
 
 Search for project mentions:
