@@ -151,6 +151,17 @@ Gap ≠ demand. Gap is what's wrong now. Demand is what they want built. They're
 
 **Pre-launch persona construction:** For WIP / unreleased apps with no user data, the non-technical and evaluator personas cannot be grounded in usage evidence. Instead, ground them in **launch audience characteristics**: What audience is the Product Hunt / launch channel submission targeting? Who shares this type of app on Twitter/Reddit? What are the top App Store reviews for the nearest comparable? Use these as evidence sources when in-app signal is unavailable.
 
+### Missing voices (required, 3–5 lines)
+
+After building the 5 persona cards, write a brief "Missing voices" note: which user types are completely unrepresented in the signal? These are the people whose perspective would *change the analysis* if they spoke.
+
+Examples:
+- A finance tool with no accountant or tax-professional signal — they'd care about export formats, compliance language, and filing deadlines that none of the current personas raised.
+- A developer tool with no junior/learner signal — they'd surface onboarding failures that experienced users have forgotten to notice.
+- A CLI tool with no Windows-user signal — they might find the whole install story broken.
+
+This is not a persona card — it's a named blind spot. One sentence per missing voice: "**Enterprise IT buyers:** No signal. Would likely prioritize SSO, audit logs, and procurement compliance — all absent from the current recommendation set." This belongs at the end of the personas section. Its function is to tell the builder: *here's what might flip the analysis if you gathered it.*
+
 ---
 
 ## Phase 2.5 — Five product lenses (pre-synthesis)
@@ -242,6 +253,24 @@ Specific backfire mechanism per item — not prioritization. "Building Y would r
 
 ---
 
+## Phase 3.4 — Goal comparison view
+
+After completing the ranked recommendation list, produce a compact "how this changes under other goals" perspective. This is the most direct answer to "what should I build next" from multiple angles — the same signal, the same gaps, but re-weighted against a different objective.
+
+**How to do it:**
+1. Identify 2 plausible alternative goals for this project (e.g. if the user confirmed *adoption*, the alternatives might be *retention* and *cutting maintenance load*).
+2. For each alternative, scan the existing recommendation pool and state:
+   - What moves to #1 (or top-3) that wasn't there before
+   - What drops off or becomes "Don't build" under this goal
+   - One sentence on why the answer changes
+3. Keep it compact — this is a movement view, not a full re-run. Each alternative goal gets 3–5 lines.
+
+**Why this matters:** The same recommendation can be the best move under one goal and actively harmful under another (as the demo showed: "post the launch" was #1 for adoption and "don't build" for cutting maintenance). Showing the builder two alternative lenses lets them sanity-check their goal and spot recommendations that are robust across goals vs. ones that only hold under their specific objective.
+
+**Place this section:** Between the personas and the diff section (or before the table on first runs). It is output content, not internal machinery.
+
+---
+
 ## Phase 3.5 — Coverage check (quality gate)
 
 Before outputting, verify every box is checked. If any fails, fix it before proceeding:
@@ -257,7 +286,9 @@ Before outputting, verify every box is checked. If any fails, fix it before proc
 - [ ] **If `Signal quality: Low`** — the "Low Signal — Gather Before Re-Running" validation block appears immediately before the At-a-glance table. A Low-signal run without it has silently dropped a mandated section.
 - [ ] **"Don't build yet" has ≥1 item** with a backfire mechanism (not a priority judgment).
 - [ ] **Brand before behavior:** if an Elevation makes a positioning claim ("privacy-native"), a Gap fixes any current behavior that contradicts it — else the claim is a credibility trap.
-- [ ] **Structure:** goal in the header matches the gate; recommendations lead; the At-a-glance table is last with nothing after it but the footer.
+- [ ] **Goal comparison section present** — 2 alternative goals named, each with what moves to #1 and what drops off. The recommendations that are robust across all 3 goals are called out.
+- [ ] **Missing voices present** — at least 2 named user types with zero signal, each with one sentence on what they'd surface that the current personas don't.
+- [ ] **Structure:** goal in the header matches the gate; recommendations lead; personas + missing voices + goal comparison before the diff; At-a-glance table is last with nothing after it but the footer.
 
 ---
 
@@ -326,6 +357,25 @@ Offer to action the top pick immediately — don't wait to be asked:
 ## Personas behind these
 *The analytical basis for the ranking above — who these recommendations serve.*
 [5 persona cards: Evidence / Their context / Gap they hit / What they'd demand next]
+
+**Missing voices:** [3–5 lines naming user types with zero signal whose perspective would change the analysis. One sentence each: who they are and what they'd surface that the current 5 personas don't.]
+
+---
+
+## If your goal were different
+*Same project, same gaps — how the top recommendations reshuffle under 2 alternative goals.*
+
+**Under [Alternative goal A, e.g. retention]:**
+- #1 becomes: [what moves to top and why]
+- Drops off: [what falls out or becomes "don't build"]
+- Why it changes: [one sentence]
+
+**Under [Alternative goal B, e.g. cutting maintenance load]:**
+- #1 becomes: [what moves to top and why]
+- Drops off: [what falls out or becomes "don't build"]
+- Why it changes: [one sentence]
+
+*The recommendations that appear in the top 3 under ALL three goals are your safest bets regardless of which direction you commit to.*
 
 ---
 
